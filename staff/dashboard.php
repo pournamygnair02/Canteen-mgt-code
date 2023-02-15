@@ -65,7 +65,7 @@ else
 													$rws=mysqli_num_rows($result);
 													
 													echo $rws;?></h2>
-                                    <p class="m-b-0">Students</p>
+                                    <p class="m-b-0">Customers</p>
                                 </div>
                             </div>
                         </div>

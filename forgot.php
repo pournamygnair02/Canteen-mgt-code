@@ -43,7 +43,7 @@
                     // Content
                     $mail->isHTML(true);                                  // Set email format to HTML
                     $mail->Subject = 'Password Reset';
-                    $mail->Body    = 'To reset your password click <a href="http://localhost/Canteen_Management/change_password.php?reset='.$code.'">Click Here</a></b>';
+                    $mail->Body    = 'To reset your password click <a href="http://localhost/backup/change_password.php?reset='.$code.'">Click Here</a></b>';
             
                     $mail->send();
                     echo 'Message has been sent';

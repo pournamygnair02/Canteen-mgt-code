@@ -42,7 +42,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
 							move_uploaded_file($temp, $store);			  
 							$success = '<div class="alert alert-success alert-dismissible fade show">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<strong>Congrass!</strong> New Dish Added Successfully.
+										<strong></strong> New Dish Added Successfully.
 										</div>';               	
 						}
 					}
@@ -110,14 +110,14 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                         <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">price </label>
+                                                    <label class="control-label">Price </label>
                                                     <input type="text" name="price" class="form-control" placeholder="₹">
                                                    </div>
                                             </div>
  <div class="col-md-6">
  <div class="col-md-8">
                                                 <div class="form-group">
-                                                    <label class="control-label">quantity</label>
+                                                    <label class="control-label">Quantity</label>
                                                     <input type="number" name="quantity" min="1" max="100" value="<?php echo $rows['quantity'];?>"  class="form-control">
                                                 </div>
                                             </div>
@@ -136,7 +136,7 @@ if(isset($_POST['submit']))           //if upload btn is pressed
                                         <div class="row">	
                                              <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">Select Category</label>
+                                                    <label class="control-label">Select Food Category</label>
 													<select name="dish_name" class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
                                                         <option>--Select Food Category--</option>
                                                         <?php

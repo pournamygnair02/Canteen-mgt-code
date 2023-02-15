@@ -285,12 +285,12 @@ only screen and (max-width: 760px),
 															?> 
 															
 															<!-- <button type="submit" class="btn btn-outline-danger"  name="submit"><span class="fa fa-close"  aria-hidden="true" ></span> <span></span>Cancel Order ?</button>	onclick="return confirm('Are you sure to Cancel Order?');" --> 
-															<a href="your_orders.php?o_id=<?php echo $row['o_id']; ?>"  class="btn btn-outline-danger" onclick="return confirm('Are you sure to want Cancell Ordered?');"><i class="fa fa-close"></i>Cancel Order ?</a>
+															<!-- <a href="your_orders.php?o_id=<?php echo $row['o_id']; ?>"  class="btn btn-outline-danger" onclick="return confirm('Are you sure to want Cancell Ordered?');"><i class="fa fa-close"></i>Cancel Order ?</a> -->
 															<?php 
 																}elseif($status=="rejected")
 																{
 															?>
-															<button type="button" class="btn btn-outline-danger" style=""><span class=""  aria-hidden="true" ></span> <span></span>Cancelled</button>
+															<!-- <button type="button" class="btn btn-outline-danger" style=""><span class=""  aria-hidden="true" ></span> <span></span>Cancelled</button> -->
 															<?php
 																}
 																else
@@ -330,33 +330,7 @@ only screen and (max-width: 760px),
                     </div>
                 </div>
             </section>
-            <!-- <section class="app-section">
-                <div class="app-wrap">
-                    <div class="container">
-                        <div class="row text-img-block text-xs-left">
-                            <div class="container">
-                                <div class="col-xs-12 col-sm-6 hidden-xs-down right-image text-center">
-                                    <figure> <img src="images/app.png" alt="Right Image"> </figure>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 left-text">
-                                    <h3>The Best Food Delivery App</h3>
-                                    <p>Now you can make food happen pretty much wherever you are thanks to the free easy-to-use Food Delivery &amp; Takeout App.</p>
-                                    <div class="social-btns">
-                                        <a href="#" class="app-btn apple-button clearfix">
-                                            <div class="pull-left"><i class="fa fa-apple"></i> </div>
-                                            <div class="pull-right"> <span class="text">Available on the</span> <span class="text-2">App Store</span> </div>
-                                        </a>
-                                        <a href="#" class="app-btn android-button clearfix">
-                                            <div class="pull-left"><i class="fa fa-android"></i> </div>
-                                            <div class="pull-right"> <span class="text">Available on the</span> <span class="text-2">Play store</span> </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> -->
+           
             
             <!-- start: FOOTER -->
             <?php include_once('footer.php');?>

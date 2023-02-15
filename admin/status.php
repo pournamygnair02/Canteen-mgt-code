@@ -34,8 +34,8 @@ session_start();
                                                 <th>User Name</th>		
                                                 <th>Dish Name</th>
                                                 <th>Quantity</th>
-                                                <th>price</th>	
-												<th>status</th>												
+                                                <th>Price</th>	
+												<th>Status</th>												
 												 <th>PickUp Time</th>
 												  <th>Action</th>
 												 

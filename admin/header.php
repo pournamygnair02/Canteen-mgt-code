@@ -280,7 +280,7 @@ header('location:index.php');
                             </ul>
                         </li>
                        <li> <a class="" href="staff.php" aria-expanded="false"> <span><i class="fa fa-user f-s-20"></i></span><span class="hide-menu">Staff</span> </a>
-
+                       <li> <a class="" href="viewleave.php" aria-expanded="false"> <span><i class="fa fa-user f-s-20"></i></span><span class="hide-menu">Leave</span> </a>
                         <li> <a class=" " href="add_category.php" aria-expanded="false"><i class="fa fa-apple f-s-20"></i><span class="hide-menu">Food Category</span></a>
                             <!-- <ul aria-expanded="false" class="collapse">
 								<li><a href="allrestraunt.php">All Stores</a></li>
@@ -300,6 +300,14 @@ header('location:index.php');
                             <ul aria-expanded="false" class="collapse">
 								<li><a href="all_orders.php">All Orders</a></li>
 								  
+                            </ul>
+                        </li>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-cutlery" aria-hidden="true"></i><span class="hide-menu">Data Analysis</span></a>
+                            <ul aria-expanded="false" class="collapse">
+								<li><a href="testing.php">Sales Analysis</a></li>
+								
+                              
+                                
                             </ul>
                         </li>
                         <!-- <li> <a class="" href="all_contact.php" aria-expanded="false"> <span><i class="fa fa-phone"></i></span><span class="hide-menu">Contact Us</span> </a> -->

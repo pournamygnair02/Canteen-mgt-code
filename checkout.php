@@ -28,9 +28,9 @@ else
                         }
                         elseif(substr($_POST['pickTime'],0,2) == date("G"))
                         {                                     
-                            if(substr($_POST['pickTime'],3,2) < date("i") + 10)
+                            if(substr($_POST['pickTime'],3,2) < date("i") + 20)
                             {                          
-                                $error = "Please Select Time After 10 Minutes";	
+                                $error = "Please Select Time After 20  Minutes";	
                             }
                             else
                             {                          
@@ -44,7 +44,7 @@ else
                                     if (parseInt(i.innerHTML)<=0) {
                                         location.href = 'your_orders.php';
                                     }
-                                    i.innerHTML = parseInt(i.innerHTML)-1;
+                                    i.innerHTML = parseInt(i.innerHTML)1;
                                 }
                                 setInterval(function(){ countdown(); },1000);
                                 </script>'";	                              	
@@ -127,7 +127,7 @@ else
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="#">
-    <title>Starter Template for Bootstrap</title>
+    <title>Checkout</title>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -135,7 +135,9 @@ else
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style-starter.css"> </head>
+    <link rel="stylesheet" href="assets/css/style-starter.css">
+
+ </head>
     <?php include_once('header.php'); ?>
 
         <section class="w3l-breadcrumb">
@@ -172,7 +174,7 @@ else
                                                     </tr>
                                                     <tr>
                                                         <td>Pick-Up Time</td>
-                                                        <td><input type="time" id="pickTime" name="pickTime"></td>
+                                                        <td><input type="time"  id="pickTime" name="pickTime"></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-color"><strong>Total</strong></td>
@@ -187,13 +189,13 @@ else
                                         <ul class=" list-unstyled">
                                             <li>
                                                 <label class="custom-control custom-radio  m-b-20">
-                                                    <input name="mod" id="radioStacked1" checked value="COD" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Payment on delivery</span>
+                                                    <input name="mod" id="radioStacked1" checked value="COD" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Online Payment</span>
                                                      </label>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <label class="custom-control custom-radio  m-b-10">
                                                     <input name="mod"  type="radio" value="paypal" disabled class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Online Payment <img src="images/paypal.jpg" alt="" width="90"></span> </label>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                         <p class="text-xs-center"> <input type="submit" onclick="return confirm('Are you sure?');" name="submit"  class="btn btn-outline-success btn-block" value="Order now"> </p>
                                     </div>
