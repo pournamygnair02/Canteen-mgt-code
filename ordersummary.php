@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php
+include("connection/connect.php");
+include_once('product-action.php');
+// error_reporting(0);
+
+
+session_start();
+if(empty($_SESSION["user_id"]))
+{
+	header('location:login.php');
+}
+else
+{	
+    /*$sql="select * from users_orders, dishes where users_orders.title ='".$item["title"]."' and users_orders.title=dishes.title";
+    $result=$db->query($sql);
+    if($result->num_rows>0){
+        while($row = $result->fetch_assoc()){
+            $d_id=$row['d_id'];
+        }
+    }*/
+
+    $pickuptime=$_POST["pickTime"];
+    $amount=$_POST["amount"];
+    $tamount=$_POST["tamount"];
+
+    ?>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+    <title>Checkout</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animsition.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style-starter.css">
+
+ </head>
+    <?php include_once('header.php'); ?>
+
+        <section class="w3l-breadcrumb">
+            <div class="container">
+                <ul class="breadcrumbs-custom-path">
+                    <li><a href="index.php">Home</a></li>
+                    <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> Checkout</li>
+                </ul>
+            </div>
+        </section>	
+         <div class="container">
+			 <span style="color:green;"> <?php echo $success; ?></span>
+             <span style="color:red;"> <?php echo $error; ?></span>				
+         </div>
+            <div class="container m-t-30">
+			
+                <div class="widget clearfix">
+                    
+                    <div class="widget-body">
+                       
+                            <div class="row">
+                                
+                                <div class="col-sm-12">
+                                    <div class="cart-totals margin-b-20">
+                                        <div class="cart-totals-title">
+                                            <h4>Order Summary</h4> 
+                                        </div>
+                                        <div class="cart-totals-fields">
+                                          <table class="table">
+											<tbody>                                          												 				   
+                                                    <tr>
+                                                        <td>Total</td>
+                                                        <td> <?php echo "₹".$amount; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Pick-Up Time</td>
+                                                        <td><input type="text" value="<?php echo $pickuptime ?>" readonly></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-color"><strong>Total</strong></td>
+                                                        <td class="text-color"><strong> <?php echo "₹".$tamount; ?></strong></td>
+                                                    </tr>
+                                                </tbody>				
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--cart summary-->
+                                    <div class="payment-option">
+                                       
+                                    <?php
+$apiKey="rzp_test_em7D3Mc9HOl221";
+?>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+<form action="ordersuccess.php" method="POST">
+<script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="<?php echo $apiKey; ?>" // Enter the Test API Key ID generated from Dashboard → Settings → API Keys
+    data-amount="<?php echo $tamount  * 100;?>" // Amount is in currency subunits. Hence, 29935 refers to 29935 paise or ₹299.35.
+    data-currency="INR"// You can accept international payments by changing the currency code. Contact our Support Team to enable International for your account
+    data-id="order_CgmcjRh9ti2lP7"// Replace with the order_id generated by you in the backend.
+    data-buttontext="Proceed to Pay"
+    data-name="Book Meals"
+    data-description="Everything’s better with a bit of fragrance."
+    data-image="logo.png"
+    data-prefill.name="Minu Joe"
+    data-prefill.email=""
+    data-theme.color="#F37254"
+></script>
+<input type="hidden" value="<?php echo $pickuptime?>" name="pickuptime">
+<input type="hidden" custom="Hidden Element" name="hidden" class="btn btn-primary">
+</form>
+                                    </div>
+									</form>
+                                </div>
+                            </div>
+                       
+                    </div>
+                </div>
+				 </form>
+            </div>
+
+
+
+
+
+            
+<!--gateway end-->
+
+<style>
+    .razorpay-payment-button{
+        background-color: #0DCAF0;
+        color: white;
+        font-size: 18px;padding: 8px 10px;font-weight: bold;
+        border-radius: 12px; border: none;text-align: center; 
+    }
+</style>
+           
+            
+            <?php include_once('footer.php');?>
+
+            <!-- end:Footer -->
+        </div>
+        <!-- end:page wrapper -->
+         </div>
+
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/animsition.min.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
+    <script src="js/jquery.isotope.min.js"></script>
+    <script src="js/headroom.js"></script>
+    <script src="js/foodpicky.min.js"></script>
+    <script src="jquery.toaster.js"></script>
+    <script>
+
+        
+   const pressEnter = (event) => {
+      if (event.key === "Enter") 
+      {
+         event.preventDefault();
+      }
+   };
+   document.getElementById("pickTime").addEventListener("keydown",
+   pressEnter);
+</script>
+
+  <!-- move top -->
+  <button onclick="topFunction()" id="movetop" title="Go to top">
+  	&#10548;
+  </button>
+  <script>
+  	// When the user scrolls down 20px from the top of the document, show the button
+  	window.onscroll = function () {
+  		scrollFunction()
+  	};
+
+  	function scrollFunction() {
+  		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+  			document.getElementById("movetop").style.display = "block";
+  		} else {
+  			document.getElementById("movetop").style.display = "none";
+  		}
+  	}
+
+  	// When the user clicks on the button, scroll to the top of the document
+  	function topFunction() {
+  		document.body.scrollTop = 0;
+  		document.documentElement.scrollTop = 0;
+  	}
+  </script>
+  <!-- /move top -->
+  </section>
+
+
+  <!--/MENU-JS-->
+  <script>
+  	$(window).on("scroll", function () {
+  		var scroll = $(window).scrollTop();
+
+  		if (scroll >= 80) {
+  			$("#site-header").addClass("nav-fixed");
+  		} else {
+  			$("#site-header").removeClass("nav-fixed");
+  		}
+  	});
+  </script>
+
+<?php
+}
+?>
+
+
+
+
+<?php
+
+
+          
+?>
+
+

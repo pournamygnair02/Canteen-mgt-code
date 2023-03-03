@@ -217,7 +217,7 @@ only screen and (max-width: 760px),
 							</thead>
 						 	 <tbody>
 									<?php 
-						                $query_res= mysqli_query($db,"select * from users_orders where u_id='".$_SESSION['user_id']."' order by o_id desc");
+						                $query_res= mysqli_query($db,"select tbl1.o_id,tbl1.quantity as orderquantity,tbl1.status AS orderstatus,tbl1.price,tbl1.pick_time,tbl1.d_id,tbl1.u_id,tbl2.* from users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id where tbl1.u_id='".$_SESSION['user_id']."' order by tbl1.o_id desc");
 										if(!mysqli_num_rows($query_res) > 0 )
 										{
 													echo '<td colspan="7"><center>You have No orders Placed yet. </center></td>';
@@ -229,24 +229,24 @@ only screen and (max-width: 760px),
 									?>
 												<tr>	
 															<td data-column="Item"> <?php echo $row['title']; ?></td>
-															<td data-column="Quantity"> <?php echo $row['quantity']; ?></td>
+															<td data-column="Quantity"> <?php echo $row['orderquantity']; ?></td>
 															<td data-column="price">₹<?php echo $row['price']; ?></td>
 															<td data-column="status"> 
 														                <?php 
-																			$status=$row['status'];
+																			$status=$row['orderstatus'];
 																		   
-                                                                            if($status=="" or $status=="NULL")
+                                                                            if($status=="1")
 																			{
 																			?>
 																			<button type="button" class="btn btn-primary" style="background-color: purple !important;border-color:purple;"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> <span></span>Pending</button>
                                                                             <?php 
                                                                              } 												  
-																			 if($status=="in process")
+																			 if($status=="2")
 																			 { ?>
 																			 <button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"  aria-hidden="true" ></span> <span></span>Preparing!</button>
 																			<?php
 																			}
-																			if($status=="closed")
+																			if($status=="4")
 																			{
 																			?>
                                                                              <button type="button" class="btn btn-success"> <i class="fa fa-check-circle"></i> <span></span>Delivered</button>
@@ -254,7 +254,7 @@ only screen and (max-width: 760px),
 																			} 
 																			?>
 																			<?php
-																			if($status=="rejected")
+																			if($status=="5")
 																			{
 																			?>
 																			 <button type="button" class="btn btn-danger"> <i class="fa fa-times-circle"></i> <span></span>Cancelled</button>
@@ -262,13 +262,13 @@ only screen and (max-width: 760px),
 																			} 
 																			?>
                                                                             <?php
-																			if($status=="confirm")
+																			if($status=="6")
 																			{
 																			?>
 																			  <button type="button" class="btn btn-info"> <i class="fa fa-check"></i> <span></span>Accepted</button>
 																			<?php 
 																			} 
-																			if($status=="prepared")
+																			if($status=="3")
 																			{
 																			?>
 																			<button type="button" class="btn btn-success" style="background-color: green !important;border-color:green;"> <i class="fa fa-shopping-bag"></i> <span></span>Ready to Pick</button>

@@ -56,10 +56,11 @@ session_start();
 																								<td>'.$rows['title'].'</td>
 																								<td>'.$rows['quantity'].'</td>
 																								<td>₹'.$rows['price'].'</td>';
+                                                                                                
 																								?>
 																								<?php 
                                                                                                     $status=$rows['status'];
-                                                                                                    if($status=="" or $status=="NULL")
+                                                                                                    if($status=="1")
                                                                                                     {
                                                                                                     ?>
                                                                                                     <td> <button type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-pulse"></i> <span></span>Pending</button></td> 

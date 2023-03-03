@@ -94,7 +94,7 @@ if(isset($_POST['submit'] ))
                                             <label>Select the Confirmation</label>
                                                 <select name="status"class="form-control">
                                                         <option value selected>Please Select</option>
-                                                        <option value="confirm">Confirm</option> 
+                                                        <option value="2">Confirm</option> 
                                                         <option value="rejected">Reject</option>                                                                                                                                       
                                                 </select>
                                         </div>

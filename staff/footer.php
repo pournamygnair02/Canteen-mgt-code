@@ -1,5 +1,5 @@
      <!-- footer -->
-     <footer class="footer"> © 2021 All rights reserved. </footer>
+     <footer class="footer"> © 2023 All rights reserved. </footer>
             <!-- End footer -->
         </div>
         <!-- End Page wrapper  -->

@@ -32,7 +32,7 @@ if (!isset($_SESSION["user_id"])) {
   <!-- //modal-dialog -->
 </div>
 <!-- //Domain modal -->
-<section class="w3l-banner" id="banner">
+<section class="w3l-banner" id="banner       ">
     <div class="new-block py-5">
         <div class="container">
             <div class="row middle-section">

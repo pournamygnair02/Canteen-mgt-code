@@ -4,7 +4,6 @@
 include("connection/connect.php"); // connection to db
 // error_reporting(0);
 session_start();
-$u_id=$_SESSION["user_id"];
 
 include_once 'product-action.php'; //including controller
 ?>
@@ -87,43 +86,34 @@ include_once 'product-action.php'; //including controller
                                  <div class="widget-body">																		
                                     <?php
                                         $item_total = 0;
-                                        $sel= "select tbl1.quantity AS cartQuantity,tbl1.c_id,tbl1.cart_id,tbl1.d_id,tbl2.*,tbl3.* from cart AS tbl1 INNER JOIN res_category AS tbl2 ON tbl1.c_id=tbl2.c_id INNER JOIN dishes AS tbl3 ON tbl1.d_id=tbl3.d_id where u_id=$u_id and cart_status=1 GROUP BY tbl3.title ORDER BY tbl1.cart_id ASC ";
-                                        if ($res = mysqli_query($db, $sel)) {
-                                            if (mysqli_num_rows($res) > 0) {	
-                                                while ($row = mysqli_fetch_array($res)) {
-
-                                        
+                                        foreach ($_SESSION["cart_item"] as $item)  // fetch items define current into session ID
+                                        {
                                      ?>									                                                                  
                                         <div class="title-row">
-
-                                        <a href="deletefromcart.php?d_id=<?php echo $row["d_id"]; ?>&c_id=<?php echo $row["c_id"] ?>" >     
-                                            <i class="fa fa-trash pull-right"></i>
+                                        <?php echo $item["title"]; ?>
+                                        <a href="deletefromcart.php?d_id=<?php echo $item["d_id"]; ?>" >     
+                                            <i class="fa fa-trash pull-right">oo</i>
                                         </a>
-                                       
-                                        <?php echo $row["title"]; ?>
-
+                                         <a href="dishes.php?c_id=<?php echo $_GET['c_id'];?>&action=add1&id=<?php echo $item['d_id']; ?>" >     
+                                            <i class="fa fa-plus pull-right" aria-hidden="true" style="color:black"></i>
+                                         </a> 
+                                         <a href="dishes.php?c_id=<?php echo $_GET['c_id']; ?>&action=minus&id=<?php echo $item["d_id"]; ?>" >     
+                                            <i class="fa fa-minus pull-right" aria-hidden="true" style="color:tometo"></i>
+                                         </a>                                  
+										</div>							
                                         <div class="form-group row no-gutter">
                                             <div class="col-xs-8">
-                                                 <input type="text" class="form-control b-r-0" value=<?php echo "₹". $row["price"]; ?> readonly id="exampleSelect1">                                                  
+                                                 <input type="text" class="form-control b-r-0" value=<?php echo "₹".$item["price"]; ?> readonly id="exampleSelect1">                                                  
                                             </div>
                                             <div class="col-xs-4">
-                                               <input class="form-control" type="number" readonly value='<?php echo $row["cartQuantity"] ; ?>' max="<?php echo $row["cartQuantity"]; ?>" id="example-number-input"> 
+                                               <input class="form-control" type="number" readonly value='<?php echo $item["quantity"]; ?>' max="<?php echo $item["quantity"]; ?>" id="example-number-input"> 
                                             </div>                                       
                                         </div>
-                                                  
-										</div>
-                                        <?php
-                                           $item_total += ($row["price"]*$row["cartQuantity"]); 
-                                                }
-                                            }
-                                        }
-                                        ?>							
-                                      
   
                                     <?php
     
-                                        // calculating current price into cart
-                                         
+                                           $item_total += ($item["price"]*$item["quantity"]); // calculating current price into cart
+                                         }
                                       ?>								    
                                  </div>
                              </div>
@@ -143,7 +133,7 @@ include_once 'product-action.php'; //including controller
                                             else
                                             {
                                            ?>     
-                                                <a href="checkout.php?c_id=<?php echo $_GET['c_id'];?>&subtotal=<?php echo $item_total;?>" class="btn theme-btn btn-lg">Checkout</a>
+                                                <a href="checkout.php?c_id=<?php echo $_GET['c_id'];?>&action=check"  class="btn theme-btn btn-lg">Checkout</a>
                                             <?php
                                             }
                                             ?>
@@ -200,7 +190,7 @@ include_once 'product-action.php'; //including controller
                                 <div class="food-item">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-lg-5">
-										<form method="post" action='addtocart.php?c_id=<?php echo $_GET['c_id'];?>&p_id=<?php echo $product['d_id']?>&price=<?php echo $product['price'];?> ?>'>
+										<form method="post" action='dishes.php?c_id=<?php echo $_GET['c_id'];?>&action=add&id=<?php echo $product['d_id']; ?>'>
                                             <div class="rest-logo pull-left">
                                                 <?php                            
                                                 if ($product['status']== 1 && $product['in_today_menu']==1)
@@ -240,15 +230,13 @@ include_once 'product-action.php'; //including controller
                                         <div class="col-xs-12 col-sm-12 col-lg-2 pull-right item-cart-info quantity buttons_added"> 
                                             <input type="button" value="-" class="minus">
                                             
-                                            <input type="number" step="1" min="1" max="<?php echo $product['quantity'];?>" name="quantity" id="QTY" value=1 readonly title="Qty" class="input-text qty text" size="4" pattern="" inputmode="" onchange="myFunction()">
+                                            <input type="number" step="1" min="1" max="<?php echo $product['quantity'];?>" name="quantity" id="QTY" value="1" readonly title="Qty" class="input-text qty text" size="4" pattern="" inputmode="" onchange="myFunction()">
                                             <input type="button" value="+" class="plus"> 
                                             
                                 
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-lg-3 pull-right item-cart-info"> 
-                                        
 										  <input type="submit" class="btn theme-btn" style="margin-left:40px;" value="Add to cart" /> 
-                                      
                                         </div>
                                         <?php                            
                                        }

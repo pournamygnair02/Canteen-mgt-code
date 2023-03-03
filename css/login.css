@@ -32,20 +32,28 @@ body {
 
 /* Form Module */
 .form-module {
-  position: center;
+  position: relative;
   background: #ffffff;
- 
+  max-width: 320px;
   width: 100%;
-  border-top: 1px solid #f30;
-  
+  border-top: 5px solid #f30;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  padding:20px;
 }
-.form
-{
-  position: center;
+.form-module .toggle {
+  cursor: pointer;
+  position: absolute;
+  top: -0;
+  right: -0;
+  background: #;
+  width: 30px;
+  height: 30px;
+  margin: -5px 0 0;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
 }
-
 .form-module .toggle .tooltip {
   position: absolute;
   top: 5px;
@@ -88,9 +96,9 @@ body {
   width: 100%;
   border: 1px solid #ccc;
   margin: 0 0 20px;
-  padding: 10px 25px;
+  padding: 10px 15px;
   box-sizing: border-box;
-  font-weight: 400;
+  font-wieght: 400;
   transition: 0.3s ease;
 }
 .form-module input:focus {

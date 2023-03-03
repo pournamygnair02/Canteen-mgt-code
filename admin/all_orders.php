@@ -47,7 +47,7 @@ session_start();
                                            
 											
 											<?php
-												$sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id order by o_id desc ";
+												$sql="SELECT users.*, users_orders.o_id,users_orders.u_id,users_orders.d_id,users_orders.quantity AS orderquantity, users_orders.status AS orderstatus,users_orders.pick_time AS orderpicktime,dishes.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id INNER JOIN dishes ON dishes.d_id=users_orders.d_id order by users_orders.o_id desc ";
 												$query=mysqli_query($db,$sql);
 												
 													if(!mysqli_num_rows($query) > 0 )
@@ -64,55 +64,55 @@ session_start();
                                                                                            <td>'.$i.'</td>
 																					           <td>'.$rows['username'].'</td>
 																								<td>'.$rows['title'].'</td>
-																								<td>'.$rows['quantity'].'</td>
+																								<td>'.$rows['orderquantity'].'</td>
 																								<td>₹'.$rows['price'].'</td>';
 																								?>
 																								<?php 
-                                                                                                    $status=$rows['status'];
-                                                                                                    if($status=="" or $status=="NULL")
+                                                                                                    $status=$rows['orderstatus'];
+                                                                                                    if($status=="1")
                                                                                                     {
                                                                                                     ?>
                                                                                                     <td> <button type="button" class="btn btn-primary"> <i class="fa fa-spinner fa-pulse"></i> <span></span>Pending</button></td> 
                                                                                                 <?php 
                                                                                                     }
-                                                                                                    if($status=="in process")
+                                                                                                    if($status=="2")
                                                                                                     { ?>
                                                                                                     <td> <button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"  aria-hidden="true" ></span> <span></span>Preparing!</button></td> 
                                                                                                     <?php
                                                                                                         }
-                                                                                                    if($status=="closed")
+                                                                                                        if($status=="3")
+                                                                                                        { ?>
+                                                                                                        <td> <button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"  aria-hidden="true" ></span> <span></span>Prepared</button></td> 
+                                                                                                        <?php
+                                                                                                            }
+                                                                                                    if($status=="4")
                                                                                                         {
                                                                                                     ?>
-                                                                                                    <td> <button type="button" class="btn btn-success"> <i class="fa fa-check-circle"></i> <span></span>Delivered</button></td> 
+                                                                                                    <td> <button type="button" class="btn btn-success"> <i class="fa fa-check-circle"></i> <span></span>Ready tp pick</button></td> 
 
                                                                                                     <?php 
                                                                                                     } 
                                                                                                     ?>
                                                                                                     <?php
-                                                                                                    if($status=="rejected")
+                                                                                                    if($status=="5")
                                                                                                         {
                                                                                                     ?>
-                                                                                                    <td> <button type="button" class="btn btn-danger"> <i class="fa fa-times-circle"></i> <span></span>Cancelled</button></td> 
+                                                                                                    <td> <button type="button" class="btn btn-danger"> <i class="fa fa-times-circle"></i> <span></span>Rejected</button></td> 
                                                                                                     <?php 
                                                                                                     } 
                                                                                                     ?>
                                                                                                     <?php
-                                                                                                    if($status=="confirm")
+                                                                                                    if($status=="6")
                                                                                                     {
                                                                                                     ?>
                                                                                                     <td>  <button type="button" class="btn btn-info"> <i class="fa fa-check"></i> <span></span>Accepted</button></td> 
                                                                                                     <?php 
                                                                                                     }
-                                                                                                    if($status=="prepared")
-                                                                                                    {
-                                                                                                    ?>
-                                                                                                    <td><button type="button" class="btn btn-info" style="background-color: green !important;border-color:green;"> <i class="fa fa-shopping-bag"></i> <span></span>Prepared</button></td> 
-                                                                                                    <?php 
-                                                                                                    }  
+                                                                                                     
                                                                                                     ?>
                                                                             
 																						<?php	
-                                                                                    		echo '	<td>'.$rows['pick_time'].'</td>';																				
+                                                                                    		echo '	<td>'.$rows['orderpicktime'].'</td>';																				
 																							echo '	<td>'.$rows['date'].'</td>';
 
 																							?>

@@ -3,6 +3,7 @@
 <?php
 include("connection/connect.php");
 include_once('product-action.php');
+$item_total=$_GET["subtotal"];
 // error_reporting(0);
 session_start();
 if(empty($_SESSION["user_id"]))
@@ -11,13 +12,21 @@ if(empty($_SESSION["user_id"]))
 }
 else
 {	
+    $u_id=$_SESSION["user_id"];
+    $sel= "select tbl1.quantity AS cartQuantity,tbl1.c_id,tbl1.cart_id,tbl1.d_id,tbl2.*,tbl3.* from cart AS tbl1 INNER JOIN res_category AS tbl2 ON tbl1.c_id=tbl2.c_id INNER JOIN dishes AS tbl3 ON tbl1.d_id=tbl3.d_id where u_id=$u_id and cart_status=1 GROUP BY tbl3.title ";
+    if ($res = mysqli_query($db, $sel)) {
+        if (mysqli_num_rows($res) > 0) {	
+            while ($row = mysqli_fetch_array($res)) {
+
+            }
+        }
+    }
+
     date_default_timezone_set("asia/kolkata");
-    $item_total =0;			  
-		foreach ($_SESSION["cart_item"] as $item)
-		{			
+   				
            		
-                $item_total += ($item["price"]*$item["quantity"]);												
-				if($_POST['submit'])
+              											
+				if (isset($_POST['submit']))
 				{	
                  
                     if(!empty($_POST['pickTime']))
@@ -97,8 +106,9 @@ else
                         $error = "Pick-Up Time Must be Fillup!";
                     }       
                 							    																											
-				}
-        }
+                }
+            
+        
         // $sql="SELECT  * FROM users_orders ORDER BY o_id DESC LIMIT 1";
         // $query=mysqli_query($db,$sql);
         // while($row=mysqli_fetch_array($query))  
@@ -153,11 +163,11 @@ else
              <span style="color:red;"> <?php echo $error; ?></span>				
          </div>
             <div class="container m-t-30">
-			<form action="" method="post">
+			<form action="ordersummary.php" method="post">
                 <div class="widget clearfix">
                     
                     <div class="widget-body">
-                        <form method="post" action="#">
+                        <form method="post" action="ordersummary.php">
                             <div class="row">
                                 
                                 <div class="col-sm-12">
@@ -170,15 +180,15 @@ else
 											<tbody>                                          												 				   
                                                     <tr>
                                                         <td>Cart Subtotal</td>
-                                                        <td> <?php echo "₹".$item_total; ?></td>
-                                                    </tr>
+                                                        <td>₹<input type="text" value="<?php echo $item_total; ?>" name="amount" style="border:none"></td>
+                                                    </tr> 
                                                     <tr>
                                                         <td>Pick-Up Time</td>
-                                                        <td><input type="time"  id="pickTime" name="pickTime"></td>
+                                                        <td><input type="time"  id="pickTime" name="pickTime" required></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-color"><strong>Total</strong></td>
-                                                        <td class="text-color"><strong> <?php echo "₹".$item_total; ?></strong></td>
+                                                        <td class="text-color">₹<input type="text" value="<?php echo $item_total; ?>" name="tamount" style="border:none"></td>
                                                     </tr>
                                                 </tbody>				
                                             </table>
@@ -188,16 +198,14 @@ else
                                     <div class="payment-option">
                                         <ul class=" list-unstyled">
                                             <li>
-                                                <label class="custom-control custom-radio  m-b-20">
-                                                    <input name="mod" id="radioStacked1" checked value="COD" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Online Payment</span>
-                                                     </label>
+                                               
                                             </li>
                                             <!-- <li>
                                                 <label class="custom-control custom-radio  m-b-10">
                                                     <input name="mod"  type="radio" value="paypal" disabled class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Online Payment <img src="images/paypal.jpg" alt="" width="90"></span> </label>
                                             </li> -->
                                         </ul>
-                                        <p class="text-xs-center"> <input type="submit" onclick="return confirm('Are you sure?');" name="submit"  class="btn btn-outline-success btn-block" value="Order now"> </p>
+                                        <p class="text-xs-center"> <input type="submit" onclick="return confirm('Are you sure you want to confirm this order?');" name="submit"  class="btn btn-outline-success btn-block" value="Order now"> </p>
                                     </div>
 									</form>
                                 </div>
@@ -207,6 +215,22 @@ else
                 </div>
 				 </form>
             </div>
+
+
+
+
+
+           
+<!--gateway end-->
+
+<style>
+    .razorpay-payment-button{
+        background-color: #0DCAF0;
+        color: white;
+        font-size: 18px;padding: 8px 10px;font-weight: bold;
+        border-radius: 12px; border: none;text-align: center; 
+    }
+</style>
             <!-- <section class="app-section">
                 <div class="app-wrap">
                     <div class="container">

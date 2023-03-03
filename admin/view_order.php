@@ -39,7 +39,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
                                        
                                         <tbody>
                                            <?php
-											$sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id where o_id='".$_GET['user_upd']."'";
+											$sql="SELECT users.*, users_orders.u_id,users_orders.d_id,users_orders.o_id,users_orders.quantity AS orderquantity,users_orders.status AS orderstatus,users_orders.pick_time AS orderpicktime,dishes.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id INNER JOIN dishes ON dishes.d_id=users_orders.d_id where users_orders.o_id='".$_GET['user_upd']."'";
 												$query=mysqli_query($db,$sql);
 												$rows=mysqli_fetch_array($query);
 																																		
@@ -68,7 +68,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 											</tr>	
 											<tr>
 													<td><strong>Quantity:</strong></td>
-												    <td><center><?php echo $rows['quantity']; ?></center></td>
+												    <td><center><?php echo $rows['orderquantity']; ?></center></td>
 													  
 												   																							
 											</tr>
@@ -80,7 +80,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 											</tr>
 											<tr>
                                                                         <td><strong>PickUp Time:</strong></td>
-                                                                        <td><center><?php echo $rows['pick_time'] ; ?></center></td>
+                                                                        <td><center><?php echo $rows['orderpicktime'] ; ?></center></td>
                                                                                                                                                                          
                                             </tr>
 											<tr>
@@ -92,19 +92,19 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 											<tr>
 													<td><strong>status:</strong></td>
 													<?php 
-																			$status=$rows['status'];
-																			if($status=="" or $status=="NULL")
+																			$status=$rows['orderstatus'];
+																			if($status=="1")
 																			{
 																			?>
 																			<td> <center><button type="button" class="btn btn-primary"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> Pending</button></center></td>
 																		    <?php 
 																			  }
-																			   if($status=="in process")
+																			   if($status=="2")
 																			 { ?>
 																			<td> <button type="button" class="btn btn-warning"><span class="fa fa-cog fa-spin"  aria-hidden="true" ></span>Preparing!</button></td> 
 																			<?php
 																				}
-																			if($status=="Ready")
+																			if($status=="4")
 																				{
 																			?>
                                                                             <td> <button type="button" class="btn btn-success"> <i class="fa fa-check-circle"></i> <span></span>Food Ready</button></td> 
@@ -113,7 +113,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 																			} 
 																			?>
 																			<?php
-																			if($status=="rejected")
+																			if($status=="5")
 																				{
 																			?>
 																			<td> <button type="button" class="btn btn-danger"> <i class="fa fa-times-circle"></i> <span></span>Cancelled</button></td> 
@@ -121,13 +121,13 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 																			} 
 																			?>
                                                                             <?php
-																			if($status=="confirm")
+																			if($status=="6")
 																			{
 																			?>
 																			<td>  <button type="button" class="btn btn-info"> <i class="fa fa-check"></i> <span></span>Accepted</button></td> 
 																			<?php 
 																			} 
-																			if($status=="prepared")
+																			if($status=="3")
 																			{
 																			?>
 																			<td><button type="button" class="btn btn-info" style="background-color: green !important;border-color:green;"> <i class="fa fa-shopping-bag"></i> <span></span>Prepared</button></td> 

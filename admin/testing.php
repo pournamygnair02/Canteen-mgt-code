@@ -29,7 +29,7 @@ session_start();
 
  ['Gender','Number'],
  <?php 
-      $query = "SELECT count(order_details.d_id) AS number, dishes.title from dishes INNER JOIN order_details WHERE dishes.d_id=order_details.d_id GROUP BY order_details.d_id";
+      $query = "SELECT users_orders.quantity AS number, dishes.title from dishes INNER JOIN users_orders WHERE dishes.d_id=users_orders.d_id GROUP BY users_orders.d_id";
 
        $exec = mysqli_query($db,$query);
        while($row = mysqli_fetch_array($exec)){

@@ -10250,7 +10250,7 @@ ul.icon-rounded li a.social-link {
   font-size: 20px; }
 
 .w3l-banner {
-  background: var(----blue);
+  background: var(--primary-color);
   min-height: calc(100vh - 130px);
   align-items: center;
   display: grid; }

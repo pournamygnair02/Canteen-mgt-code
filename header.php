@@ -89,7 +89,7 @@ session_start();
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                                                                             <!--<a class="dropdown-item effect-3" href="your_orders.php">Your Orders</a>-->
                           <a class="dropdown-item effect-3" href="update_profile.php">My Profile</a> 
-                          <a class="dropdown-item effect-3" href="your_orders.php">your orders</a> 
+                          <a class="dropdown-item effect-3" href="your_orders.php">My Orders</a> 
                           <a class="dropdown-item effect-3" href="logout.php">Logout</a>
                         </div>   
                             

@@ -40,7 +40,7 @@ if(isset($_POST['submit'] ))
                                         <tbody>
                                            <?php
                                               
-                                                    $sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id where o_id='".$_GET['o_id']."'";
+                                                    $sql="SELECT users.*, users_orders.*,dishes.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id INNER JOIN dishes ON dishes.d_id=users_orders.d_id where o_id='".$_GET['o_id']."'";
                                                     $query=mysqli_query($db,$sql);
                                                     $rows=mysqli_fetch_array($query);                                                        
 											?>
@@ -79,7 +79,7 @@ if(isset($_POST['submit'] ))
                                                                                                                                                                          
                                                                 </tr>
                                                                 <tr>
-                                                                        <td><strong>status:</strong></td>
+                                                                        <!--<td><strong>status:</strong></td>-->
                                                                         <?php
                                                                         $status=$rows['status'];
                                                                         if($status=="" or $status=="NULL")
@@ -98,8 +98,8 @@ if(isset($_POST['submit'] ))
                                             <label>Select the Confirmation</label>
                                                 <select name="status"class="form-control">
                                                         <option value selected>Please Select</option>
-                                                        <option value="confirm">Confirm</option> 
-                                                        <option value="rejected">Reject</option>                                                                                                                                       
+                                                        <option value="6">Confirm</option> 
+                                                        <option value="5">Reject</option>                                                                                                                                       
                                                 </select>
                                         </div>
                                       <input type="submit" name="submit" value="Submit" class="btn btn-success">

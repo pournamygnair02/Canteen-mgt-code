@@ -95,10 +95,6 @@ include_once 'product-action.php'; //including controller
                                         
                                      ?>									                                                                  
                                         <div class="title-row">
-
-                                        <a href="deletefromcart.php?d_id=<?php echo $row["d_id"]; ?>&c_id=<?php echo $row["c_id"] ?>" >     
-                                            <i class="fa fa-trash pull-right"></i>
-                                        </a>
                                        
                                         <?php echo $row["title"]; ?>
 
@@ -113,16 +109,22 @@ include_once 'product-action.php'; //including controller
                                                   
 										</div>
                                         <?php
-                                           $item_total += ($row["price"]*$row["cartQuantity"]); 
                                                 }
                                             }
                                         }
                                         ?>							
-                                      
+                                        <div class="form-group row no-gutter">
+                                            <div class="col-xs-8">
+                                                 <input type="text" class="form-control b-r-0" value=<?php echo "₹".$item["price"]; ?> readonly id="exampleSelect1">                                                  
+                                            </div>
+                                            <div class="col-xs-4">
+                                               <input class="form-control" type="number" readonly value='<?php echo $item["quantity"]; ?>' max="<?php echo $item["quantity"]; ?>" id="example-number-input"> 
+                                            </div>                                       
+                                        </div>
   
                                     <?php
     
-                                        // calculating current price into cart
+                                           $item_total += ($item["price"]*$item["quantity"]); // calculating current price into cart
                                          
                                       ?>								    
                                  </div>
@@ -143,7 +145,7 @@ include_once 'product-action.php'; //including controller
                                             else
                                             {
                                            ?>     
-                                                <a href="checkout.php?c_id=<?php echo $_GET['c_id'];?>&subtotal=<?php echo $item_total;?>" class="btn theme-btn btn-lg">Checkout</a>
+                                                <a href="checkout.php?c_id=<?php echo $_GET['c_id'];?>&action=check"  class="btn theme-btn btn-lg">Checkout</a>
                                             <?php
                                             }
                                             ?>
@@ -200,7 +202,7 @@ include_once 'product-action.php'; //including controller
                                 <div class="food-item">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-lg-5">
-										<form method="post" action='addtocart.php?c_id=<?php echo $_GET['c_id'];?>&p_id=<?php echo $product['d_id']?>&price=<?php echo $product['price'];?> ?>'>
+										<form method="post" action='addtocart.php?c_id=<?php echo $_GET['c_id'];?>&p_id=<?php echo $product['d_id']?>&quantity=<?php echo $item["quantity"];?>&price=<?php echo $item["price"];?> ?>'>
                                             <div class="rest-logo pull-left">
                                                 <?php                            
                                                 if ($product['status']== 1 && $product['in_today_menu']==1)
@@ -240,7 +242,7 @@ include_once 'product-action.php'; //including controller
                                         <div class="col-xs-12 col-sm-12 col-lg-2 pull-right item-cart-info quantity buttons_added"> 
                                             <input type="button" value="-" class="minus">
                                             
-                                            <input type="number" step="1" min="1" max="<?php echo $product['quantity'];?>" name="quantity" id="QTY" value=1 readonly title="Qty" class="input-text qty text" size="4" pattern="" inputmode="" onchange="myFunction()">
+                                            <input type="number" step="1" min="1" max="<?php echo $product['quantity'];?>" name="quantity" id="QTY" value="1" readonly title="Qty" class="input-text qty text" size="4" pattern="" inputmode="" onchange="myFunction()">
                                             <input type="button" value="+" class="plus"> 
                                             
                                 
