@@ -26,6 +26,19 @@ mysqli_query($db, $ins);
 ?>
 
 <?php
+$sql4="SELECT MAX(o_id) AS o_id FROM users_orders";
+$result4=$db-> query($sql4);
+if ($result4-> num_rows > 0)
+{
+while ($row=$result4-> fetch_assoc()) 
+{
+    $o_id=$row["o_id"];
+}
+}
+
+$ins2="INSERT INTO tbl_payment VALUES(NULL,'$u_id','$o_id','1')";
+mysqli_query($db, $ins2);
+
 $del="UPDATE CART SET cart_status=0 AND u_id='$u_id'";
 mysqli_query($db, $del);
 

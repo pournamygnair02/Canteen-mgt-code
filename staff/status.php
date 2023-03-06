@@ -37,7 +37,7 @@ session_start();
                                            
 											
 											<?php
-												$sql="SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id order by o_id desc";
+												$sql="SELECT users.*, users_orders.o_id,users_orders.u_id,users_orders.d_id,users_orders.pick_time AS picktime,users_orders.quantity AS orderquantity,users_orders.price,users_orders.status AS orderstatus,dishes.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id INNER JOIN dishes ON dishes.d_id=users_orders.d_id WHERE users_orders.status='1' order by users_orders.o_id desc";
 												$query=mysqli_query($db,$sql);
 												
 													if(!mysqli_num_rows($query) > 0 )
@@ -47,47 +47,59 @@ session_start();
 													else
 													{			
                                                         $i=1;
-																	while($rows=mysqli_fetch_array($query))
-																	{
-                                                                        $status=$rows['status'];	
-                                                                        if($status=="" or $status=="NULL")
-                                                                        {																		
-											?>
-																				<?php
-																					echo ' <tr>
-                                                                                                <td>'.$i.'</td>
-																					           <td>'.$rows['username'].'</td>
-																								<td>'.$rows['title'].'</td>
-																								<td>'.$rows['quantity'].'</td>
-																								<td>₹'.$rows['price'].'</td>';
-																				?>
-																								<?php 
-                                                                                                    
-                                                                                                    if($status=="" or $status=="NULL")
-                                                                                                    {
-                                                                                                 ?>
-                                                                                                    <td> <button type="button" class="btn btn-primary" style="font-weight:bold;"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> <span></span> Pending</button></td>
-                                                                                                <?php 
-                                                                                                    }
-                                                                                                  
-                                                                                                ?>
-                                                                                                   
-                                                                                                
-																					          <?php																									
-																							echo '	<td>'.$rows['pick_time'].'</td>';
-																				            	?>
-																								    <td>
-																									    <!-- <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>  -->
-																								<?php
-																							        	echo '<a href="view_status.php?o_id='.$rows['o_id'].'" " class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="ti-settings"></i></a>
-																									</td>
-																		</tr>';	$i++;
-                                                                        }
-                                                                        // else
-                                                                        // {
-                                                                        //     echo '<td colspan="8"><center>No New Orders!</center></td>';
-                                                                        // }										 																																												
-																	}	
+                                                        while($rows=mysqli_fetch_array($query))
+                                                        {
+                                                            $status=$rows['orderstatus'];	
+                                                  
+                                                                    
+                                                                        echo ' <tr>
+                                                                                    <td>'.$i.'</td>
+                                                                                    <td>'.$rows['user_regno'].'</td>
+                                                                                   <td>'.$rows['username'].'</td>
+                                                                                    <td>'.$rows['title'].'</td>
+                                                                                    <td>'.$rows['orderquantity'].'</td>
+                                                                                    <td>₹'.$rows['price'].'</td>';
+                                                                    ?>
+                                                                                    <?php 
+                                                                                        
+                                                                                        if($status=="1")
+                                                                                        {
+                                                                                     ?>
+                                                                                        <td> <button type="button" class="btn btn-primary" style="font-weight:bold;"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> <span></span> Pending</button></td>
+                                                                                    <?php 
+                                                                                        }
+                                                                                        if($status=="5")
+                                                                                        {
+                                                                                     ?>
+                                                                                        <td> <button type="button" class="btn btn-primary" style="font-weight:bold;"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> <span></span> Rejected</button></td>
+                                                                                    <?php 
+                                                                                        }
+                                                                                        if($status=="6")
+                                                                                        {
+                                                                                     ?>
+                                                                                        <td> <button type="button" class="btn btn-primary" style="font-weight:bold;"><span class="fa fa-spinner fa-pulse"  aria-hidden="true" ></span> <span></span> Confirmed</button></td>
+                                                                                    <?php 
+                                                                                        }
+                                                                                      
+                                                                                    ?>
+                                                                                       
+                                                                                    
+                                                                                  <?php																									
+                                                                                echo '	<td>'.$rows['picktime'].'</td>';
+                                                                                    ?>
+                                                                                        <td>
+                                                                                            <!-- <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>  -->
+                                                                                    <?php
+                                                                                            echo '<a href="view_status.php?o_id='.$rows['o_id'].'" " class="btn btn-info btn-flat btn-addon btn-sm m-b-10 m-l-5"><i class="ti-settings"></i></a>
+                                                                                        </td>
+                                                            </tr>';	
+                                                            $i++;
+                                                            
+                                                            // else
+                                                            // {
+                                                            //     echo '<td colspan="8"><center>No New Orders!</center></td>';
+                                                            // }										 																																												
+                                                        }	
                                                                 
 													}																							
 											?>                                                                                                                      

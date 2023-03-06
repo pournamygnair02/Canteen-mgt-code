@@ -212,7 +212,7 @@ only screen and (max-width: 760px),
 									 <th>Date</th>
 									<th>Pick Time</th> 
 									<th>Action</th>
-									<!-- <th>Receipt</th> -->
+									<th>Receipt</th> 
 								</tr>
 							</thead>
 						 	 <tbody>
@@ -302,7 +302,22 @@ only screen and (max-width: 760px),
 															?>
 														  </td>
 														   </td>
-														   <!-- <td data-column="Receipt"><a href="test.php?p_time=<?= $row['pick_time']?>"  class="btn btn-outline-info">Download</a></td>  -->
+														
+																	<?php		
+																	if($status=="3")
+																	{
+																		?>
+																		<td data-column="Receipt"><a href="test.php?p_time=<?= $row['pick_time']?>& order_id=<?= $row['o_id']?>"  class="btn btn-outline-info">Download</a></td>
+																	<?php
+																	}
+																	else
+																	{
+																		?>
+																		<td></td>
+
+																	<?php
+																}?>
+														   
 												</tr>
 												
 											

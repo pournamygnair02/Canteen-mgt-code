@@ -2,10 +2,9 @@
 
 include("connection/connect.php");
 $_SESSION['bill']=1;
-if($_GET['p_time'])
-{
-   
-    $sql="select * from users_orders where pick_time='$_GET[p_time]'"; 
+$o_id=$_GET['order_id'];
+
+    $sql="select tbl1.quantity AS totalquantity,tbl1.price AS totalprice,tbl1.pick_time AS picktime,tbl1.d_id,tbl2.title,tbl1.status,tbl2.d_id from users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id WHERE tbl1.pick_time='$_GET[p_time]'"; 
     $res=mysqli_query($db,$sql);//print_r($sql);die;
     $rows[]=mysqli_fetch_array($res);
  //   print_r($rows);die;
@@ -26,6 +25,8 @@ $pdf->Cell(17,20,'#Bill No:',0,0,'c');
 $pdf->Cell(125,20,$_SESSION['bill']+=1,0,0,'c');
 $pdf->Cell(12,20,'Date :',0,0,'r');
 $pdf->Cell(40,20,date("d/m/y"),0,0,'r');
+
+
 $pdf->Line(10,35,200,35);
 $pdf->Ln(10);
 
@@ -34,7 +35,7 @@ $pdf->Cell(20,15,'SR.No:',0,0,'c');
 $pdf->Cell(60,15,'Dish Name:',0,0,'c');
 $pdf->Cell(40,15,'QTY:',0,0,'c');
 $pdf->Cell(40,15,'Price:',0,0,'c');
-$pdf->Cell(40,15,'Value:',0,0,'c');
+$pdf->Cell(40,15,'Time:',0,0,'c');
 $pdf->Line(10,44,200,44);
 $pdf->Ln(10);
 $grandtotal=0;
@@ -43,26 +44,27 @@ while($rows=mysqli_fetch_array($res))
 {
     $pdf->Cell(20,15,$i,0,0,'c');
     $pdf->Cell(63,15,$rows['title'],0,0,'c');
-    $pdf->Cell(38,15,$rows['quantity'],0,0,'c');
-    $pdf->Cell(41,15,$rows['price'],0,0,'c');
-    $total=$rows['quantity']*$rows['price'];
+    $pdf->Cell(38,15,$rows['totalquantity'],0,0,'c');
+    $pdf->Cell(41,15,$rows['totalprice'],0,0,'c');
+    $total=$rows['totalquantity']*$rows['totalprice'];
     $grandtotal= $grandtotal + $total;
-    $pdf->Cell(40,15,$total,0,0,'c');
+    $pdf->Cell(40,15,$rows['picktime'],0,0,'c');
     $pdf->Ln(10);
     $i++;
 }
-// $pdf->Line(10,100,200,100);
+//$pdf->Line(10,100,200,100);
 $pdf->Ln(10);
 
 $pdf->SetFont('arial','B',13);
+
 $pdf->Cell(151,25,'Grand Total:',0,0,'c');
-$pdf->Cell(50,25,$grandtotal,0,0,'c');
+$pdf->Cell(50,25,"Rs. ".$grandtotal,0,0,'c');
 
 // $pdf->SetFont('arial','B',12);
 // $pdf->Cell(70,75,'Grand Total',0,0,'c');
 
 
 $pdf->Output();
-}
+
 ?>
 

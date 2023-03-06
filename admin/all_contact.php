@@ -7,13 +7,30 @@ session_start();
 
 ?>
 <?php include_once('header.php');?> 
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<style>.progress {
+  height: 20px;
+  border-radius: 10px;
+  width:60%;
+  margin-left:20%px;
+  background-color: lightgray;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+}</style>
+</head>
+
 <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Contact Us</h3> </div>
+                    <h3 class="text-primary">Feedback</h3> </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Contact Us</li>
+                        <li class="breadcrumb-item active">Feedback</li>
                     </ol>
                 </div>
             </div>
@@ -25,8 +42,46 @@ session_start();
                        
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Students Contacts</h4>
-                             
+                                <h4 class="card-title">User Feedback</h4>
+                                <?php
+ $sql = "SELECT message from contact_us";
+$result = $db->query($sql);
+if ($result->num_rows > 0) {
+    // Output data of each row
+    $texts = array();
+    while($row = $result->fetch_assoc()) {
+        $texts[] = $row["message"];
+    }
+    $url = 'http://127.0.0.1:5000/sentiment';
+    $data = json_encode(array('texts' => $texts));
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => $data,
+        ),
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    $overall_sentiment = json_decode($result, true)['sentiment'];
+$neg=100 - ($overall_sentiment * 100);
+} else {
+    echo "No comments found";
+}
+?>
+
+
+&nbsp;<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: <?php echo abs($overall_sentiment) * 100; ?>%; background-color:orange;">
+  </div>
+</div>
+<span>&nbsp;Positive &nbsp;<?php  echo abs($overall_sentiment) * 100;?> %</span>
+&nbsp;<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: <?php echo $neg; ?>%; background-color:blue;">
+  </div>
+  </div>
+  <span>&nbsp;Negative&nbsp;<?php  echo $neg;?> %</span>
+    <br><br><br>
                                 <div class="table-responsive m-t-40">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
@@ -67,9 +122,9 @@ session_start();
 																				?>
 																								
 																								    <td>
-																									    <!-- <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>  -->
-																								<?php
-																							        	echo '<a  href=" "  class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a>
+																									     <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a> 
+																								
+																			
 																									</td>
 																		                     </tr>';	
                                                                         $i++;

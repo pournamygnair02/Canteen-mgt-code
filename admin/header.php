@@ -310,7 +310,7 @@ header('location:index.php');
                                 
                             </ul>
                         </li>
-                        <!-- <li> <a class="" href="all_contact.php" aria-expanded="false"> <span><i class="fa fa-phone"></i></span><span class="hide-menu">Contact Us</span> </a> -->
+                         <li> <a class="" href="all_contact.php" aria-expanded="false"> <span><i class="fa fa-phone"></i></span><span class="hide-menu">Feedback</span> </a> 
                          
                     </ul>
                 </nav>
