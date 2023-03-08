@@ -52,9 +52,7 @@ session_start();
             <li class="nav-item @@about-active">
               <a class="nav-link effect-3" href="about.php">About</a>
             </li>
-            <!-- <li class="nav-item @@services-active">
-              <a class="nav-link effect-3" href="services.php">Menu</a>
-            </li> -->
+            
             <li class="nav-item @@contact-active">
               <a class="nav-link effect-3" href="contact.php">Contact</a>
             </li>
@@ -98,7 +96,7 @@ session_start();
 						?>
 					
           <div id="google_element">
-<script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+ <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
                             <script >
                                 function loadGoogleTranslate(){
                                    new google.translate.TranslateElement("google_element");
@@ -107,18 +105,10 @@ session_start();
   </div>
                               </div>
           </ul>
-          <!-- <div class="popup">
-            <a href="#domain" class="domain" data-toggle="modal" data-target="#DomainModal">
-              <div class="hamburger1">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </a>
-          </div>
+          
         </div>
       </nav>
-    </div> -->
+    </div> 
   </header>
   
 </div>

@@ -9,19 +9,7 @@ session_start();
 <?php include_once('header.php');?> 
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<style>.progress {
-  height: 20px;
-  border-radius: 10px;
-  width:60%;
-  margin-left:20%px;
-  background-color: lightgray;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  transition: width 0.5s ease;
-}</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <div class="row page-titles">
@@ -47,9 +35,8 @@ session_start();
  $sql = "SELECT message from contact_us";
 $result = $db->query($sql);
 if ($result->num_rows > 0) {
-    // Output data of each row
     $texts = array();
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         $texts[] = $row["message"];
     }
     $url = 'http://127.0.0.1:5000/sentiment';
@@ -63,25 +50,89 @@ if ($result->num_rows > 0) {
     );
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
-    $overall_sentiment = json_decode($result, true)['sentiment'];
-$neg=100 - ($overall_sentiment * 100);
-} else {
-    echo "No comments found";
+    $result = json_decode($result, true);
+
+    $positive = $result['positive'];
+    $negative = $result['negative'];
+    $neutral = $result['neutral'];
+    $total = $positive + $negative + $neutral;
+
+    $pos_percent = ($positive / $total) * 100;
+    $neg_percent = ($negative / $total) * 100;
+    $neu_percent = ($neutral / $total) * 100;
+    $pos_accuracy = ($pos_percent > $neg_percent) ? $pos_percent : (100 - $neg_percent);
+    $neg_accuracy = ($neg_percent > $pos_percent) ? $neg_percent : (100 - $pos_percent);
+    $neutral_accuracy = ($neu_percent > ($pos_percent + $neg_percent)) ? $neu_percent : (100 - ($pos_percent + $neg_percent));
+
+   } else {
+    echo "No feedback data found in the database.";
+    $pos_percent = 0;
+    $neg_percent = 0;
+    $neu_percent=0;
+    $neu_percent = 0;
+    $pos_accuracy = 0;
+    $neg_accuracy = 0;
+    $neu_accuracy = 0;
+    $neutral_accuracy=0;
 }
+
 ?>
 
 
-&nbsp;<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: <?php echo abs($overall_sentiment) * 100; ?>%; background-color:orange;">
-  </div>
-</div>
-<span>&nbsp;Positive &nbsp;<?php  echo abs($overall_sentiment) * 100;?> %</span>
-&nbsp;<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: <?php echo $neg; ?>%; background-color:blue;">
-  </div>
-  </div>
-  <span>&nbsp;Negative&nbsp;<?php  echo $neg;?> %</span>
+
     <br><br><br>
+    <div class="content">
+<div class="module">
+<div class="module-head">
+<div class="container-fluid">        
+    <h1>Sentiment Analysis </h1>
+    <div class="chart-container">
+        <canvas id="sentiment-chart"></canvas>
+    </div>
+    <div>
+    <p>Positive Accuracy: <?php echo $pos_accuracy; ?>%</p>
+    <p>Negative Accuracy: <?php echo $neg_accuracy; ?>%</p>
+    <p>Neutral Accuracy: <?php echo $neutral_accuracy; ?>%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <script>
+        var ctx = document.getElementById('sentiment-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Positive', 'Negative', 'Neutral'],
+                datasets: [{
+                    label: 'Sentiment Analysis percentage',
+                    data: [<?php echo $pos_percent; ?>, <?php echo $neg_percent; ?>, <?php echo $neu_percent; ?>],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 10,
+                            max: 100
+                        }
+                    }
+                }
+            }
+        });
+    </script>
                                 <div class="table-responsive m-t-40">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
@@ -113,20 +164,23 @@ $neg=100 - ($overall_sentiment * 100);
                                                                         																
 											?>
 																				<?php
+                                                                                $o_id=$rows['id'];
 																				  echo ' <tr>
                                                                                                 <td>'.$i.'</td>
 																					           <td>'.$rows['name'].'</td>
 																								<td>'.$rows['email'].'</td>
 																								<td>'.$rows['message'].'</td>';
+                                                                                                
 																								
-																				?>
+																			?>
 																								
 																								    <td>
-																									     <a href="delete_orders.php?order_del=<?php echo $rows['o_id'];?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a> 
+																									     <a href="delete_orders.php?order_del=<?php echo $o_id?>" onclick="return confirm('Are you sure?');" class="btn btn-danger btn-flat btn-addon btn-xs m-b-10"><i class="fa fa-trash-o" style="font-size:16px"></i></a> 
 																								
 																			
 																									</td>
-																		                     </tr>';	
+																		                     </tr>	
+                                                                       <?php
                                                                         $i++;
                                                                     }
                                                                         									 																																												
@@ -160,5 +214,5 @@ $neg=100 - ($overall_sentiment * 100);
     <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <script src="js/lib/datatables/datatables-init.js"></script>
 
-
+                                                
     <?php include_once('footer.php');?>
