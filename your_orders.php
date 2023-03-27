@@ -213,6 +213,8 @@ only screen and (max-width: 760px),
 									<th>Pick Time</th> 
 									<th>Action</th>
 									<th>Receipt</th> 
+									<th>Review</th> 
+
 								</tr>
 							</thead>
 						 	 <tbody>
@@ -232,6 +234,7 @@ only screen and (max-width: 760px),
 															<td data-column="Quantity"> <?php echo $row['orderquantity']; ?></td>
 															<td data-column="price">₹<?php echo $row['price']; ?></td>
 															<td data-column="status"> 
+
 														                <?php 
 																			$status=$row['orderstatus'];
 																		   
@@ -308,11 +311,13 @@ only screen and (max-width: 760px),
 																	{
 																		?>
 																		<td data-column="Receipt"><a href="test.php?p_time=<?= $row['pick_time']?>& order_id=<?= $row['o_id']?>"  class="btn btn-outline-info">Download</a></td>
+																		<td data-column="Review"> <a href="review.php?id=<?php echo $row['d_id']?>" class="btn btn-outline-info">Review</a></td>
 																	<?php
 																	}
 																	else
 																	{
 																		?>
+																		
 																		<td></td>
 
 																	<?php

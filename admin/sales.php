@@ -1,10 +1,6 @@
 <?php
-if(strlen($_SESSION['adm_id'])==0)
-{ 
-header('location:index.php');
-}
-
-                                $chck="SELECT * FROM users_orders WHERE status IS NULL";
+include("../connection/connect.php");
+$chck="SELECT * FROM users_orders WHERE status IS NULL";
                                 $result=mysqli_query($db,$chck);
                                 $rowcount=mysqli_num_rows($result);
 								//print_r($rowcount);die;
@@ -22,10 +18,13 @@ header('location:index.php');
                                 {
                                     print_r('cdddddd');die;
                                 }
-							
-                        ?>	
+?>
+<!DOCTYPE html>
+<html lang="en">
+    
 <head>
-    <meta charset="utf-8">
+
+<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,9 +58,25 @@ header('location:index.php');
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
 
-
+<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 20px;
+		}
+		table, th, td {
+			border: 1px solid black;
+			padding: 5px;
+			text-align: center;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+    
 </head>
-
 <body class="fix-header">
     <!-- Preloader - style you can find in spinners.css -->
     <div class="preloader">
@@ -359,4 +374,247 @@ $("#m1").click(function() {
     })
 });
 });
-</script> -->
+</script> -->  
+<div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Sales Report</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Sales Report</li>
+                    </ol>
+                </div>
+            </div>
+    
+<div class="span9">
+<div class="content">
+<div class="module">
+<div class="module-head">
+<div class="container-fluid"> 
+<div class="col-md-12 text-right mb-3">
+<button class="btn btn-primary" id="download">download</button>
+            </div>  
+ <div id="invoice"> 
+<?php
+// Connect to the database
+// Retrieve sales data for the specified year and month
+if (isset($_GET['year']) && isset($_GET['month'])) {
+    $year = $_GET['year'];
+    $month = $_GET['month'];
+    $sql = "SELECT SUM(oi.price) AS total_revenue
+    FROM users_orders oi INNER JOIN dishes p ON oi.d_id = p.d_id
+    WHERE MONTH(oi.date) = $month
+    AND YEAR(oi.date) = $year";
+    // Calculate the sales metrics
+    $result = mysqli_query($db, $sql);
+
+// Check if there are any results
+if (mysqli_num_rows($result) > 0) {
+    // Output the total revenue for the seller for the specified month and year
+    $row = mysqli_fetch_assoc($result);
+    echo "<h2>Sales report for $month/$year</h2>";
+    $total_revenue = $row['total_revenue'];
+    echo "<p>Total Revenue : ₹$total_revenue</p>";
+} 
+    }
+
+    // Generate the sales report
+    
+  
+echo "<table>";
+$sql=  "SELECT p.title, oi.date, oi.price,u.username
+FROM users_orders oi INNER JOIN users u ON oi.u_id=u.u_id
+INNER JOIN dishes p ON oi.d_id = p.d_id
+WHERE  MONTH(oi.date) = $month
+AND YEAR(oi.date) = $year";
+    // Calculate the sales metrics
+    $result = mysqli_query($db, $sql);
+
+// Check if there are any results
+if (mysqli_num_rows($result) > 0) {
+    // Output the total revenue for the seller for the specified month and year
+    echo "<table>";
+    echo "<tr><th>Product_Name</th><th>User_name</th><th>Date</th><th>Amount</th></tr>";
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td>".$row['title']."</td>";
+        echo "<td>".$row['username']."</td>";
+        echo "<td>".$row['date']."</td>";
+        echo "<td>₹".$row['price']."</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+    // $sql3 = "SELECT count(oi.d_id) AS number, p.title
+    // FROM users_orders oi  JOIN dishes p ON oi.d_id = p.d_id 
+    // WHERE YEAR(oi.date) = $year AND MONTH(oi.date) = $month GROUP BY oi.d_id";
+    
+    // $result3 = mysqli_query($db, $sql3);
+    
+    // // Format the sales data for use with Chart.js
+    // $labels = array();
+    // $data = array();
+    // while ($row = mysqli_fetch_assoc($result3)) {
+    //     array_push($labels, $row['title']);
+    //     array_push($data, $row['number']);
+    // }
+    // $labels_json = json_encode($labels);
+    // $data_json = json_encode($data);
+    // // Display the sales graph
+    // echo "<h2>Sales by Product for $month/$year</h2>";
+    // echo "<canvas id='sales-chart'></canvas>";
+    // echo "<script>";
+    // echo "var ctx = document.getElementById('sales-chart').getContext('2d');";
+    // echo "var salesChart = new Chart(ctx, {";
+    // echo "    type: 'bar',";
+    // echo "    data: {";
+    // echo "        labels: $labels_json,";
+    // echo "        datasets: [{";
+    // echo "            label: 'Sales',";
+    // echo "            data: $data_json,";
+    // echo "            backgroundColor: [";
+    // echo "                'rgba(255, 99, 132, 0.2)',";
+    // echo "                'rgba(54, 162, 235, 0.2)',";
+    // echo "                'rgba(255, 206, 86, 0.2)',";
+    // echo "                'rgba(75, 192, 192, 0.2)',";
+    // echo "                'rgba(153, 102, 255, 0.2)',";
+    // echo "                'rgba(255, 159, 64, 0.2)'";
+    // echo "            ],";
+    // echo "            borderColor: [";
+    // echo "                'rgba(255, 99, 132, 1)',";
+    // echo "                'rgba(54, 162, 235, 1)',";
+    // echo "                'rgba(255, 206, 86, 1)',";
+    // echo "                'rgba(75, 192, 192, 1)',";
+    // echo "                'rgba(153, 102, 255, 1)',";
+    // echo "                'rgba(255, 159, 64, 1)'";
+    // echo "            ],";
+    // echo "            borderWidth: 1";
+    // echo "        }]";
+    // echo "    }";
+    // echo "});";
+    // echo "</script>";
+    }
+// Retrieve sales by seller data for a specific month and year
+// $sql4 = "SELECT SUM(oi.quantity * oi.price) AS amount, s.brandname
+//     FROM order_items oi 
+//     JOIN orders o ON oi.order_id = o.id 
+//     JOIN product p ON oi.product_id = p.product_id 
+//     JOIN seller s ON p.seller_id = s.seller_id
+//     WHERE YEAR(o.order_date) = $year AND MONTH(o.order_date) = $month 
+//     GROUP BY p.seller_id";
+
+// $result4 = mysqli_query($con, $sql4);
+
+// // Format the sales data for use with Chart.js
+// $labels = array();
+// $data = array();
+// while ($row = mysqli_fetch_assoc($result4)) {
+//     array_push($labels, $row['brandname']);
+//     array_push($data, $row['amount']);
+// }
+// $labels_json = json_encode($labels);
+// $data_json = json_encode($data);
+
+// // Display the sales graph
+// echo "<h2>Sales by Seller for $month/$year</h2>";
+// echo "<canvas id='seller-sales-chart'></canvas>";
+// echo "<script>";
+// echo "var ctx = document.getElementById('seller-sales-chart').getContext('2d');";
+// echo "var sellerSalesChart = new Chart(ctx, {";
+// echo "    type: 'bar',";
+// echo "    data: {";
+// echo "        labels: $labels_json,";
+// echo "        datasets: [{";
+// echo "            label: 'Amount',";
+// echo "            data: $data_json,";
+// echo "            backgroundColor: [";
+// echo "                'rgba(255, 99, 132, 0.2)',";
+// echo "                'rgba(54, 162, 235, 0.2)',";
+// echo "                'rgba(255, 206, 86, 0.2)',";
+// echo "                'rgba(75, 192, 192, 0.2)',";
+// echo "                'rgba(153, 102, 255, 0.2)',";
+// echo "                'rgba(255, 159, 64, 0.2)'";
+// echo "            ],";
+// echo "            borderColor: [";
+// echo "                'rgba(255, 99, 132, 1)',";
+// echo "                'rgba(54, 162, 235, 1)',";
+// echo "                'rgba(255, 206, 86, 1)',";
+// echo "                'rgba(75, 192, 192, 1)',";
+// echo "                'rgba(153, 102, 255, 1)',";
+// echo "                'rgba(255, 159, 64, 1)'";
+// echo "            ],";
+// echo "            borderWidth: 1";
+// echo "        }]";
+// echo "    }";
+// echo "});";
+// echo "</script>";
+// $sql5= "SELECT s.brandname,SUM(oi.quantity * oi.price) AS total_sales FROM order_items oi 
+// JOIN orders o ON oi.order_id = o.id 
+// JOIN product p ON oi.product_id = p.product_id 
+// JOIN seller s ON p.seller_id = s.seller_id
+// WHERE YEAR(o.order_date) = $year AND MONTH(o.order_date) = $month 
+// GROUP BY s.brandname
+// ORDER BY total_sales DESC
+// LIMIT 1";
+//  $result5= mysqli_query($con, $sql5);
+
+//  // Check if there are any results
+//  if (mysqli_num_rows($result5) > 0) {
+//      // Output the total revenue for the seller for the specified month and year
+//      $row = mysqli_fetch_assoc($result5);
+//      echo "<h2>Best Seller of $month/$year</h2>";
+//      $best_seller = $row['brandname'];
+//      echo "<h3>$best_seller</h3>";
+//  } 
+// }
+// ?>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><!--/.content-->
+</div><!--/.span9-->
+</div>
+</div><!--/.container-->
+</div><!--/.wrapper-->
+<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>
+<script src="scripts/datatables/jquery.dataTables.js"></script>
+<!-- <script src="validation.js"></script> -->
+<script>
+$(document).ready(function() {
+$('.datatable-1').dataTable({
+"pageLength": 5,
+"lengthMenu": [5, 10, 20, 25, 50]
+});
+$('.dataTables_paginate').addClass("btn-group datatable-pagination");
+$('.dataTables_paginate > a').wrapInner('<span />');
+$('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
+$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
+});
+
+</script>
+<script>
+window.onload = function () {
+    document.getElementById("download")
+        .addEventListener("click", () => {
+            const invoice = this.document.getElementById("invoice");
+            console.log(invoice);
+            console.log(window);
+            var opt = {
+                margin: 1,
+                filename: 'report.pdf',
+                image: { type: 'jpeg', quality: 0.99 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a3', orientation: 'p' }
+            };
+            html2pdf().from(invoice).set(opt).save();
+        })
+}
+</script>
+</body>
+<?php ?>
+</html>
+         

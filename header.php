@@ -111,7 +111,7 @@ session_start();
     </div> 
   </header>
   
-</div>
+
 <!--/header-->
 
 <!-- Domain Modal -->

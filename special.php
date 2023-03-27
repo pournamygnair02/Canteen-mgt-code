@@ -64,6 +64,7 @@ if (!isset($_SESSION["user_id"])) {
                 <?php
 				         }					
 				?>
+
                     <!-- <div class="item">
                         <div class="d-grid food-info">
                             <div class="column">
@@ -74,6 +75,7 @@ if (!isset($_SESSION["user_id"])) {
                                 <a href="#url"><img src="assets/images/p4.jpg" alt="" class="img-fluid radius-image mt-4"/></a>
                             </div>
                         </div> -->
+						
                     </div>
                    
                 </div>

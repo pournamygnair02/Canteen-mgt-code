@@ -9,7 +9,7 @@ session_start();
 <?php include_once('header.php');?>
 <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">All Menues</h3> </div>
+                    <h3 class="text-primary">All Menu</h3> </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -108,12 +108,14 @@ session_start();
     </div>
   <!-- End Container fluid  -->
 
-    <script src="js/lib/datatables/datatables.min.js"></script>
+    
     <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
     <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
     <script src="js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <!-- PDF-->
     <script src="js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
     <script src="js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
     <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <script src="js/lib/datatables/datatables-init.js"></script>

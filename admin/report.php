@@ -1,10 +1,6 @@
 <?php
-if(strlen($_SESSION['adm_id'])==0)
-{ 
-header('location:index.php');
-}
-
-                                $chck="SELECT * FROM users_orders WHERE status IS NULL";
+include("../connection/connect.php");
+$chck="SELECT * FROM users_orders WHERE status IS NULL";
                                 $result=mysqli_query($db,$chck);
                                 $rowcount=mysqli_num_rows($result);
 								//print_r($rowcount);die;
@@ -22,8 +18,9 @@ header('location:index.php');
                                 {
                                     print_r('cdddddd');die;
                                 }
-							
-                        ?>	
+?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,7 +58,6 @@ header('location:index.php');
 
 
 </head>
-
 <body class="fix-header">
     <!-- Preloader - style you can find in spinners.css -->
     <div class="preloader">
@@ -359,4 +355,40 @@ $("#m1").click(function() {
     })
 });
 });
-</script> -->
+</script> -->  
+<div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Sales Report</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Sales Report</li>
+                    </ol>
+                </div>
+            </div>
+<div class="span9">
+<div class="content">
+<div class="module">
+<div class="module-head">
+<div class="container-fluid">
+ <!-- HTML form for entering year and month -->
+ <form method="get" action="sales.php">
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" required  min=2022>
+    <label for="month">Month:</label>
+    <input type="number" id="month" name="month" required min=1 max=12>
+    <input type="submit" value="Generate report">
+</form>
+ </div>
+</div>
+</div>
+</div>
+</div><!--/.content-->
+</div><!--/.span9-->
+</div>
+</div><!--/.container-->
+</div><!--/.wrapper-->
+
+</body>
+<?php ?>
+</html>

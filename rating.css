@@ -1,0 +1,9 @@
+<!-- CSS -->
+.star-rating {
+  font-size: 50px;
+  
+}
+.star-rating i {
+  font-size: 20px;
+  margin-right: 2px;
+}

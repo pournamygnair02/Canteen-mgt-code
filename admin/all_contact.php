@@ -85,7 +85,7 @@ if ($result->num_rows > 0) {
 <div class="module">
 <div class="module-head">
 <div class="container-fluid">        
-    <h1>Sentiment Analysis </h1>
+    <h1>Feedback Analysis </h1>
     <div class="chart-container">
         <canvas id="sentiment-chart"></canvas>
     </div>
