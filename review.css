@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
   label {
     display: block;
@@ -63,4 +64,71 @@
   
   input[type="submit"]:hover {
     background-color: #e64a19;
+=======
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .rating {
+    display: inline-block;
+    direction: rtl;
+  }
+  
+  .rating input[type="radio"] {
+    display: none;
+  }
+  
+  .rating label {
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  
+  .rating label:hover,
+  .rating label:hover ~ label,
+  .rating input[type="radio"]:checked ~ label {
+    color: #ff9800;
+  }
+  
+  textarea {
+    width: 50%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+  }
+  
+  input[type="text"] {
+    width: 10%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"] {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    background-color: #22a0c0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #e64a19;
+>>>>>>> 79934bca211cf6cf9336ddbf4f6528c8bb027d58
   }

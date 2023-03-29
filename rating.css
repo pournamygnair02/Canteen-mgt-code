@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- CSS -->
 .star-rating {
   font-size: 50px;
@@ -7,3 +8,14 @@
   font-size: 20px;
   margin-right: 2px;
 }
+=======
+<!-- CSS -->
+.star-rating {
+  font-size: 50px;
+  
+}
+.star-rating i {
+  font-size: 20px;
+  margin-right: 2px;
+}
+>>>>>>> 79934bca211cf6cf9336ddbf4f6528c8bb027d58
