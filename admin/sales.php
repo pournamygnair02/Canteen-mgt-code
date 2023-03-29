@@ -434,7 +434,7 @@ AND YEAR(oi.date) = $year";
 if (mysqli_num_rows($result) > 0) {
     // Output the total revenue for the seller for the specified month and year
     echo "<table>";
-    echo "<tr><th>Product_Name</th><th>User_name</th><th>Date</th><th>Amount</th></tr>";
+    echo "<tr><th>Dish_Name</th><th>User_name</th><th>Date</th><th>Amount</th></tr>";
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>";
         echo "<td>".$row['title']."</td>";

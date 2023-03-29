@@ -182,9 +182,27 @@ else
                                                         <td>Cart Subtotal</td>
                                                         <td>₹<input type="text" value="<?php echo $item_total; ?>" name="amount" style="border:none"></td>
                                                     </tr> 
+                                                    
                                                     <tr>
                                                         <td>Pick-Up Time</td>
-                                                        <td><input type="time"  id="pickTime" name="pickTime" required></td>
+                                                        <?php
+                                                    $min_time = strtotime('08:00:00');
+                                                    $max_time = strtotime('18:00:00');
+
+                                                    // Get the current time
+                                                    $current_time = time();
+
+                                                    // Check if the current time is within the minimum and maximum times
+                                                    if ($current_time < $min_time || $current_time > $max_time) {
+                                                        echo "<p>Sorry, we are closed.</p>";
+                                                    } else {
+                                                        echo "<p>Welcome, we are open!</p>";
+                                                        ?>
+                                                        <td><input type="time"  id="pickTime" name="pickTime" max="11:00" min="07:00" required></td>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <td class="text-color"><strong>Total</strong></td>

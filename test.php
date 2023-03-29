@@ -3,15 +3,20 @@
 include("connection/connect.php");
 $_SESSION['bill']=1;
 $o_id=$_GET['order_id'];
+$pickuptime=$_GET['p_time'];
+?>
 
-    $sql="select tbl1.quantity AS totalquantity,tbl1.price AS totalprice,tbl1.pick_time AS picktime,tbl1.d_id,tbl2.title,tbl1.status,tbl2.d_id from users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id WHERE tbl1.pick_time='$_GET[p_time]'"; 
+
+<?php
+
+    $sql="select tbl1.u_id,tbl1.o_id,tbl1.quantity AS totalquantity,tbl1.price AS totalprice,tbl1.pick_time,tbl2.*,tbl3.* FROM users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id INNER JOIN users AS tbl3 ON tbl1.u_id=tbl3.u_id where tbl1.o_id='$o_id'"; 
     $res=mysqli_query($db,$sql);//print_r($sql);die;
     $rows[]=mysqli_fetch_array($res);
  //   print_r($rows);die;
 
 require('fpdf/dash.php');
 //require_once('fpdf/fpdf.php');
-$title='Canteen Management';
+$title='Receipt';
 $pdf=new FPDF();
 $pdf->AddPage();
 // $pdf->SetTitle($title);
@@ -46,9 +51,10 @@ while($rows=mysqli_fetch_array($res))
     $pdf->Cell(63,15,$rows['title'],0,0,'c');
     $pdf->Cell(38,15,$rows['totalquantity'],0,0,'c');
     $pdf->Cell(41,15,$rows['totalprice'],0,0,'c');
+
     $total=$rows['totalquantity']*$rows['totalprice'];
     $grandtotal= $grandtotal + $total;
-    $pdf->Cell(40,15,$rows['picktime'],0,0,'c');
+    $pdf->Cell(40,15,$rows['pick_time'],0,0,'c');
     $pdf->Ln(10);
     $i++;
 }
