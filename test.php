@@ -2,16 +2,15 @@
 
 include("connection/connect.php");
 $_SESSION['bill']=1;
-$o_id=$_GET['order_id'];
-$pickuptime=$_GET['p_time'];
+$order_id=$_GET["order_id"];
 ?>
 
 
 <?php
+	$sql="SELECT tbl1.o_id,tbl1.quantity AS totalquantity,tbl1.price AS totalprice,tbl1.pick_time,tbl2.* FROM users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id WHERE o_id='$order_id'";
+    $query=mysqli_query($db,$sql);
 
-    $sql="select tbl1.u_id,tbl1.o_id,tbl1.quantity AS totalquantity,tbl1.price AS totalprice,tbl1.pick_time,tbl2.*,tbl3.* FROM users_orders AS tbl1 INNER JOIN dishes AS tbl2 ON tbl1.d_id=tbl2.d_id INNER JOIN users AS tbl3 ON tbl1.u_id=tbl3.u_id where tbl1.o_id='$o_id'"; 
-    $res=mysqli_query($db,$sql);//print_r($sql);die;
-    $rows[]=mysqli_fetch_array($res);
+ 
  //   print_r($rows);die;
 
 require('fpdf/dash.php');
@@ -45,7 +44,7 @@ $pdf->Line(10,44,200,44);
 $pdf->Ln(10);
 $grandtotal=0;
 $i=1;
-while($rows=mysqli_fetch_array($res))
+while($rows=mysqli_fetch_array($query))
 {
     $pdf->Cell(20,15,$i,0,0,'c');
     $pdf->Cell(63,15,$rows['title'],0,0,'c');

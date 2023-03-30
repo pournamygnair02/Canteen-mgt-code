@@ -310,7 +310,8 @@ only screen and (max-width: 760px),
 																	if($status=="3")
 																	{
 																		?>
-																		<td data-column="Receipt"><a href="test.php?p_time=<?= $row['pick_time']?>& order_id=<?= $row['o_id']?>"  class="btn btn-outline-info">Download</a></td>
+																		
+																		<td data-column="Receipt"><a href="test.php?order_id=<?= $row['o_id']?>"  class="btn btn-outline-info">Download</a></td>
 																		<td data-column="Review"> <a href="review.php?id=<?php echo $row['d_id']?>" class="btn btn-outline-info">Review</a></td>
 																	<?php
 																	}

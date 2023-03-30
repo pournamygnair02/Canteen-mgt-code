@@ -198,7 +198,7 @@ else
                                                     } else {
                                                         echo "<p>Welcome, we are open!</p>";
                                                         ?>
-                                                        <td><input type="time"  id="pickTime" name="pickTime" max="11:00" min="07:00" required></td>
+                                                        <td><input type="time"  id="pickTime" name="pickTime" max="12:00" min="07:00" required></td>
                                                         <?php
                                                     }
                                                     ?>
