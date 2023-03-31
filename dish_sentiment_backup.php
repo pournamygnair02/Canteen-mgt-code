@@ -1,13 +1,63 @@
-
-
 <?php    
    include("../connection/connect.php");
    
    error_reporting(0);
    session_start();
     $user_id = $_SESSION["user_id"];
-    ?>
-    <!DOCTYPE html>
+    if(isset($_POST['check']))
+    {
+      $prod= $_POST['product'];
+        
+       
+    $sql = "SELECT * FROM review_table,dishes where review_table.product_id=dishes.d_id and review_table.product_id=$prod";
+    $result = $db->query($sql);
+
+if ($result->num_rows > 0) {
+    $texts = array();
+    while ($row = $result->fetch_assoc()) {
+        $texts[] = $row["user_review"];
+    }
+    $url = 'http://127.0.0.1:5000/sentiment';
+    $data = json_encode(array('texts' => $texts));
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => $data,
+        ),
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    $result = json_decode($result, true);
+
+    $positive = $result['positive'];
+    $negative = $result['negative'];
+    $neutral = $result['neutral'];
+    $total = $positive + $negative + $neutral;
+
+    $pos_percent = ($positive / $total) * 100;
+    $neg_percent = ($negative / $total) * 100;
+    $neu_percent = ($neutral / $total) * 100;
+    $pos_accuracy = ($pos_percent > $neg_percent) ? $pos_percent : (100 - $neg_percent);
+    $neg_accuracy = ($neg_percent > $pos_percent) ? $neg_percent : (100 - $pos_percent);
+    $neutral_accuracy = ($neu_percent > ($pos_percent + $neg_percent)) ? $neu_percent : (100 - ($pos_percent + $neg_percent));
+
+   } else {
+    echo "No feedback data found in the database.";
+    $pos_percent = 0;
+    $neg_percent = 0;
+    $neu_percent=0;
+    $neu_percent = 0;
+    $pos_accuracy = 0;
+    $neg_accuracy = 0;
+    $neu_accuracy = 0;
+    $neutral_accuracy=0;
+}
+    }
+    
+  
+?>
+<!DOCTYPE html>
 <html lang="en">
 <?php include_once('header.php');?>
 <head>
@@ -48,7 +98,10 @@
 }
     </style>
 </head>
-<div class="main-panel">
+<body>
+
+  
+      <div class="main-panel">
         <div class="content-wrapper">
 
           <div class="row">
@@ -77,84 +130,14 @@
           <input type="submit" value="Check" name="check" id="check" class="btn btn-primary"></input>
         </div>
       </form>
-    <?php
-    if(isset($_POST['check']))
-    {
-      $prod= $_POST['product'];
-        
-       
-    $sql = "SELECT * FROM review_table,dishes where review_table.product_id=dishes.d_id and review_table.product_id=$prod";
-    $result = $db->query($sql);
-
-if ($result->num_rows > 0) {
-    ?>
-     <div class="chart-container">
+    <div class="chart-container">
         <canvas id="sentiment-chart"></canvas>
     </div>
-   
-
-    <?php
-    $texts = array();
-    while ($row = $result->fetch_assoc()) {
-        $texts[] = $row["user_review"];
-    }
-    $url = 'http://127.0.0.1:5000/sentiment';
-    $data = json_encode(array('texts' => $texts));
-    $options = array(
-        'http' => array(
-            'header'  => "Content-type: application/json\r\n",
-            'method'  => 'POST',
-            'content' => $data,
-        ),
-    );
-    $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
-    $result = json_decode($result, true);
-
-    $positive = $result['positive'];
-    $negative = $result['negative'];
-    $neutral = $result['neutral'];
-    $total = $positive + $negative + $neutral;
-
-    $pos_percent = ($positive / $total) * 100;
-    $neg_percent = ($negative / $total) * 100;
-    $neu_percent = ($neutral / $total) * 100;
-    $pos_accuracy = ($pos_percent > $neg_percent) ? $pos_percent : (100 - $neg_percent);
-    $neg_accuracy = ($neg_percent > $pos_percent) ? $neg_percent : (100 - $pos_percent);
-    $neutral_accuracy = ($neu_percent > ($pos_percent + $neg_percent)) ? $neu_percent : (100 - ($pos_percent + $neg_percent));
-?>
- <div>
+    <div>
     <p>Positive Accuracy: <?php echo $pos_accuracy; ?>%</p>
     <p>Negative Accuracy: <?php echo $neg_accuracy; ?>%</p>
     <p>Neutral Accuracy: <?php echo $neutral_accuracy; ?>%</p>
 </div>
-
-<?php
-   
-} else {
-    echo "No feedback data found in the database.";
-    $pos_percent = 0;
-    $neg_percent = 0;
-    $neu_percent=0;
-    $neu_percent = 0;
-    $pos_accuracy = 0;
-    $neg_accuracy = 0;
-    $neu_accuracy = 0;
-    $neutral_accuracy=0;
-}
-    }
-    
-  
-?>
-
-
-
-<body>
-
-  
-      
-   
-   
 
           
 

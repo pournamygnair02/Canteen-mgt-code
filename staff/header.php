@@ -321,7 +321,7 @@ header('location:index.php');
                         </li>
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="hide-menu">Leave</span></a>
                             <ul aria-expanded="false" class="collapse">
-								<li><a href="leaveapplication.php">Leave</a></li>
+								<li><a href="leaveapplication.php">Apply Leave</a></li>
 								<li><a href="leavestatus.php">Leave Status</a></li>  
                             </ul>
                         </li>

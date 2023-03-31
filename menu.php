@@ -101,7 +101,7 @@ if (!isset($_SESSION["user_id"])) {
 														 <div class="col-sm-12 col-md-12 col-lg-5 text-xs-center">
 																<div class="right-content bg-white">
 																	<div class="right-review">
-																		<p></p> <a href="dishes.php?c_id='.$rows['c_id'].'" class="btn theme-btn-dash">View Menu</a> </div>
+																		<p></p> <a href="dishes.php?c_id='.$rows['c_id'].'" id="view" class="btn theme-btn-dash">View Menu</a> </div>
 																</div>
 																<!-- end:right info -->
 														</div>';

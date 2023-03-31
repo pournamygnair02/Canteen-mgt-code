@@ -103,7 +103,7 @@ $chck="SELECT * FROM users_orders WHERE status IS NULL";
                                             <div class="form-group">
                                                 <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-info">Submit</button>
+                                            <button type="submit"  class="btn btn-info">Submit</button>
                                         </form>
                                     </li> -->
 <!--                                     
@@ -377,7 +377,7 @@ $("#m1").click(function() {
     <input type="number" id="year" name="year" required  min=2022>
     <label for="month">Month:</label>
     <input type="number" id="month" name="month" required min=1 max=12>
-    <input type="submit" value="Generate report">
+    <input type="submit"  id="submit" value="Generate report">
 </form>
  </div>
 </div>

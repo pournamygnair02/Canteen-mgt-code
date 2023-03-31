@@ -114,13 +114,13 @@ if(isset($_POST['submit']))
                                             session_start();
                                             $val=$_SESSION['st_id'];
                                             //echo $val;
-	$sql="select * from leavetable ";
+	$sql="select tbl1.*,tbl2.* from staff as tbl1 inner join leavetable as tbl2 on tbl1.st_id=tbl2.st_id ";
 												$query=mysqli_query($db,$sql);
 		while($row=mysqli_fetch_array($query))
 																	{
                                                                        ?>	
                                                                        <tr>
-                                                                        <td><?php echo $row['name'];?></td>
+                                                                        <td><?php echo $row['username'];?></td>
                                                                         <td><?php echo $row['senddate'];?></td>
                                                                         <td><?php echo $row['ltype'];?></td>
                                                                         <td><?php echo $row['lreason'];?></td>

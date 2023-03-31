@@ -34,7 +34,7 @@ session_start();
                                 <table border="2">
                                      
                                             <tr>
-                                                <th>Name</th>
+                                             
                                                 <th>Sending Date</th>		
                                                 <th>Leave Type</th>
                                                 <th>Reason For Leave</th>
@@ -50,13 +50,15 @@ session_start();
                                             session_start();
                                             $val=$_SESSION['st_id'];
                                             //echo $val;
+                                            $i=0;
 	$sql="select * from leavetable where st_id='$val'";
 												$query=mysqli_query($db,$sql);
 		while($row=mysqli_fetch_array($query))
 																	{
+                                                                        $i++;
                                                                        ?>	
                                                                        <tr>
-                                                                        <td><?php echo $row['name'];?></td>
+                                                                       <td><?php echo $i ;?></td>
                                                                         <td><?php echo $row['senddate'];?></td>
                                                                         <td><?php echo $row['ltype'];?></td>
                                                                         <td><?php echo $row['lreason'];?></td>

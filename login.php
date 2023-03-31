@@ -103,8 +103,8 @@ if(isset($_POST['submit']))
    <form action="" method="post">
       <input type="text" placeholder="Useremail"  name="email" Required/>
       <input type="password" placeholder="Password" name="password" Required/>
-      <span class="error_form" id="captcha_message"></span>
-      <div class="g-recaptcha"  data-sitekey="6LcgNeEjAAAAAFvAGLmkWh0hEhcRXPNGhW6CVNZW"></div>
+      <!-- <span class="error_form" id="captcha_message"></span>
+      <div class="g-recaptcha"  data-sitekey="6LcgNeEjAAAAAFvAGLmkWh0hEhcRXPNGhW6CVNZW"></div> -->
       <br>
       <br>
       <input type="submit" id="buttn" name="submit" value="Login" />

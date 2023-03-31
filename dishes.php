@@ -194,13 +194,13 @@ include_once 'product-action.php'; //including controller
 									{
 									foreach($products as $product)
 									{
-                                      
+                                  
                                 ?>
                                         
                                 <div class="food-item">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-lg-5">
-										<form method="post" action='addtocart.php?c_id=<?php echo $_GET['c_id'];?>&p_id=<?php echo $product['d_id']?>&price=<?php echo $product['price'];?> ?>'>
+										<form method="post"  action='addtocart.php?c_id=<?php echo $_GET['c_id'];?>&p_id=<?php echo $product['d_id']?>&price=<?php echo $product['price'];?> ?>'>
                                             <div class="rest-logo pull-left">
                                                 <?php                            
                                                 if ($product['status']== 1 && $product['in_today_menu']==1)
@@ -248,7 +248,7 @@ include_once 'product-action.php'; //including controller
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-lg-3 pull-right item-cart-info"> 
                                         
-										  <input type="submit" class="btn theme-btn" style="margin-left:40px;" value="Add to cart" /> 
+										  <input type="submit" class="btn theme-btn" style="margin-left:40px;" value="Add to cart" id="carttest" /> 
                                       
                                         </div>
                                         <?php                            

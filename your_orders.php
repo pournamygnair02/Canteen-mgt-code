@@ -312,17 +312,39 @@ only screen and (max-width: 760px),
 																		?>
 																		
 																		<td data-column="Receipt"><a href="test.php?order_id=<?= $row['o_id']?>"  class="btn btn-outline-info">Download</a></td>
-																		<td data-column="Review"> <a href="review.php?id=<?php echo $row['d_id']?>" class="btn btn-outline-info">Review</a></td>
+																		<td></td>
 																	<?php
 																	}
-																	else
+																	elseif($status=="4")
 																	{
 																		?>
-																		
-																		<td></td>
+
+																		<td style="color:grey">Downloaded</td>
+																		<td data-column="Review"> <a href="review.php?id=<?php echo $row['d_id']?>" class="btn btn-outline-info">Review</a></td>
 
 																	<?php
-																}?>
+																}
+																elseif($status=="1")
+																{
+																	?>
+																<td>Unavailable</td>
+																<td>Unavailable</td>
+																
+																
+																<?php
+																}
+																elseif($status=="2")
+																{
+																	?>
+																	<td>Unavailable</td>
+																<td>Unavailable</td>
+
+																	<?php
+
+																}
+																
+																
+																?>
 														   
 												</tr>
 												

@@ -97,21 +97,23 @@ td, th {
     {
 ?>
 <input type="hidden" name="id" value="<?php echo $row['st_id'];?>">
-        <tr><td>Name</td>
-      <td ><input type="text" name="name" value="<?php echo $row['username'];?>" readonly></td>
-      
-    </tr>
+        
     <?php
     }
     ?>
-    
-    <tr>
-      <td  >&nbsp;</td>
-      
-    </tr>
+   
     <tr>
       <td>Leave Type</td>
-      <td><input type="text" name="ltype" required></td>
+      <td>
+        <select  name="ltype" required>
+        <option selected hidden>Select any</option>
+          <option value="Medical">Medical leave</option>
+          <option value="Sick">Sick leave</option>
+          <option value="Marriage">Marriage leave</option>
+          <option value="Personal">Personal leave</option>
+        
+  </select>
+    </td>
     </tr>
 	
 	<tr>
