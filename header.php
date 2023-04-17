@@ -65,7 +65,7 @@ session_start();
                          Account <span class="fa fa-angle-down"></span>
                        </a>
                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                       <a class="dropdown-item effect-3" href="login.php">Login</a>
+                       <a class="dropdown-item effect-3" href="mainlogin.php">Login</a>
                           <a class="dropdown-item effect-3" href="registration.php">Sign Up</a>
                         </div>
                       </li> ';

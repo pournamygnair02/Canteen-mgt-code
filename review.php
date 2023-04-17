@@ -67,16 +67,20 @@ if(empty($_SESSION['user_id']))  //if usser is not login redirected baack to log
                     if(isset($_GET['id'])) {
                         $products=$_GET['id'];
                         $user = $_SESSION['user_id'];
-                        $sql = "SELECT user_rating, user_review FROM review_table WHERE user_id = $user AND product_id = $products";
+                        $sql = "SELECT * FROM review_table WHERE user_id = $user AND product_id = $products";
                         $result = mysqli_query($db, $sql);
                         $row = mysqli_fetch_assoc($result);
 
                         if(mysqli_num_rows($result) > 0) {
                             $userratings = $row['user_rating'];
                             $userreviews = $row['user_review'];
+                            $quality=$row['qlty'];
+                            $cost=$row['cost'];
                         } else {
                             $userratings = "";
                             $userreviews = "";
+                            $quality =      "";
+                            $cost = "";
                         }
                     } 
                     ?>
@@ -106,7 +110,21 @@ if(empty($_SESSION['user_id']))  //if usser is not login redirected baack to log
                         <label for="userreview" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Review</label>
                         <input id="userreview" name="userreview" type="text" value="<?php echo $userreviews;?>" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"required >
                         </div>
-                        
+                        <div class="input-group mb-3">
+                        <label for="userreview" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Review on dish quality</label>  
+                        <input id="userreview" name="qlty" type="text"  value="<?php echo $qlty;?>" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="4" cols="50" pattern="^[a-zA-Z0-9\s\.,!?]+$" autocomplete="off" required>        
+                        </div>
+
+
+                        <div class="input-group mb-3">
+                        <label for="userreview" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Review on dish cost</label>
+                        <!--<select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7 w-25" name="product" id="product" required>
+                        <option disabled selected>Choose</option>
+                        <option>Yes</option>
+                        <option>No</option>                   
+                        </select>  -->
+                        <input id="userreview" name="cost" type="text"  value="<?php echo $cost;?>" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="4" cols="50" pattern="^[a-zA-Z0-9\s\.,!?]+$" autocomplete="off" required>  
+                        </div>
 
                         <input type="hidden" name="product" id="product">
                         <button type="submit" class="btn btn-primary" name="submit">Submit</button>
@@ -172,6 +190,9 @@ if(empty($_SESSION['user_id']))  //if usser is not login redirected baack to log
 if(isset($_POST['submit'])){
     $userrating = $_POST['userrating'];
     $userreview = $_POST['userreview'];
+    $q=$_POST['qlty'];
+    $c=$_POST['cost'];
+
     $products = $_GET['id'];
     $user = $_SESSION['user_id'];
     
@@ -183,10 +204,10 @@ if(isset($_POST['submit'])){
     if ($row) {
       // If a review already exists, update the rating and review
       $review_id = $row['review_id'];
-      $sql = "UPDATE review_table SET user_rating = $userrating, user_review = '$userreview' WHERE review_id = $review_id";
+      $sql = "UPDATE review_table SET user_rating = $userrating, user_review = '$userreview',qlty='$q',cost='$c' WHERE review_id = $review_id";
     } else {
       // Otherwise, insert a new row in the database with the rating and review
-      $sql = "INSERT INTO review_table (user_id, product_id, user_rating, user_review) VALUES ($user, $products, $userrating,'$userreview')";
+      $sql = "INSERT INTO review_table (user_id, product_id, user_rating, user_review,qlty,cost) VALUES ($user, $products, $userrating,'$userreview','$q','$c')";
     }
   
     if (mysqli_query($db, $sql)) {

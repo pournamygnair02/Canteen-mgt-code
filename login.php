@@ -46,42 +46,6 @@ if(isset($_SESSION["email"]))
     } 
 }
 error_reporting(0); 
-session_start(); 
-if(isset($_POST['submit']))  
-{
-	$email = $_POST['email'];  
-	$password = $_POST['password'];
-	
-	$loginquery ="SELECT * FROM users WHERE email='$email' && password='".md5($password)."'"; //selecting matching records
-	$result=mysqli_query($db, $loginquery); //executing
-	$row=mysqli_fetch_array($result);
-	if($result->num_rows > 0)
-        {
-          foreach($result as $data)
-          {
-            $email=$data['email'];
-            $password=$data['password'];
-         
-            $code=$data['code'];
-          } 
-          if(empty($data['code']))
-          {
-			$_SESSION["user_id"] = $row['u_id']; 
-		  $_SESSION["username"] = $row['username']; 
-          $_SESSION['email'] = $email;
-		  echo "<script>alert('You are successfully Logged in');</script>";
-		  header("refresh:1;url=menu.php"); 
-		  }
-          else {
-             echo("<div class='alert alert-info'>First verify your account and try again. or your access is deneied</div>");
-        }
-    
-	
-                                
-	 }
-	
-	 }
-
 ?>
   
 <!-- Form Mixin-->
@@ -100,7 +64,7 @@ if(isset($_POST['submit']))
     <h2>Login to your account</h2>
 	  <span style="color:red;"><?php echo $message; ?></span> 
    <span style="color:green;"><?php echo $success; ?></span>
-   <form action="" method="post">
+   <form action="registertologin.php" method="post">
       <input type="text" placeholder="Useremail"  name="email" Required/>
       <input type="password" placeholder="Password" name="password" Required/>
       <!-- <span class="error_form" id="captcha_message"></span>

@@ -10,8 +10,8 @@ h3,p{
 error_reporting(0);
 session_start();
 if (!isset($_SESSION["user_id"])) {
-    header("Location: login.php");//if logout is crt then redirect to login
-  }
+    //header("Location: login.php");//if logout is crt then redirect to login
+ // }
 ?>
 <!-- Domain Modal -->
 <div class="modal right fade" id="DomainModal" tabindex="-1" role="dialog" aria-labelledby="DomainModalLabel2">
@@ -450,3 +450,6 @@ if (!isset($_SESSION["user_id"])) {
   </body>
 
   </html>
+  <?php
+}
+?>
